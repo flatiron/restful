@@ -17,6 +17,6 @@
   },
   "scripts": {
     "test": "vows --spec",
-    "start": ""
+    "start": "node examples/server.js"
   }
 }

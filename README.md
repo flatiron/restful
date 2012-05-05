@@ -64,6 +64,10 @@ var server = http.createServer(function (req, res) {
 server.listen(8000);
 ```
 
+# Tests
+
+     npm test
+
 # TODO
 
  - Full property type support ( numeric, boolean, array, object )
