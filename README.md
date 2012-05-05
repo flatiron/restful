@@ -1,4 +1,4 @@
-# restful - Experimental v0.0.0
+# restful - Unreleased Experimental v0.0.0
 
 Create [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) APIs for [resourceful](http://github.com/flatiron/resourceful) models.
 
@@ -67,6 +67,8 @@ server.listen(8000);
 
  - Full property type support ( numeric, boolean, array, object )
  - Nested schema properties
+ - Implement and document browser support
  - Update API to be more consistent with Director syntax ( using `new` keyword )
+ - Expose library as Flatiron plugin and integrate with https://github.com/flatiron/flatiron/blob/scaffolding/ branch
  - Better Tests
  - Create helpers for tests
