@@ -67,5 +67,6 @@ server.listen(8000);
 
  - Full property type support ( numeric, boolean, array, object )
  - Nested schema properties
+ - Update API to be more consistent with Director syntax ( using `new` keyword )
  - Better Tests
  - Create helpers for tests

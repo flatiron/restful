@@ -5,11 +5,12 @@
   "main": "./lib/restful",
   "dependencies": {
     "director": "1.0.x",
-    "api-easy": "0.3.x",
     "vows": "0.6.x",
     "resourceful": "0.1.x"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "api-easy": "0.3.x"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "0.6.x"
