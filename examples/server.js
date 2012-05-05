@@ -34,10 +34,11 @@ var server = http.createServer(function (req, res) {
 
    Router will now dispatch all RESTFul urls for the Creature resource
 
-    POST    /Creature
-    GET     /Creature/1
-    PUT     /Creature/1
-    DELETE  /Creature/1
+    POST    /Creature    => Creature.create()
+    GET     /Creature    => Creature.all()
+    GET     /Creature/1  => Creature.show()
+    PUT     /Creature/1  => Creature.update()
+    DELETE  /Creature/1  => Creature.destroy()
 
   */
   router.dispatch(req, res, function (err) {
