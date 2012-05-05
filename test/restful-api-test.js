@@ -31,14 +31,6 @@ var Creature = resourceful.define('creature', function () {
   this.timestamps();
 });
 
-//
-// Now that the `Creature` prototype is defined
-// we can add custom logic to be available on all instances
-//
-Creature.prototype.feed = function (food) {
-  this.belly.push(food);
-};
-
 
 var router = restful.createRouter(Creature);
 
