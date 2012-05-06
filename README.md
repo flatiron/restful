@@ -24,7 +24,7 @@ var Creature = resourceful.define('creature', function () {
   //
   // Specify some properties with validation
   //
-  this.string('name');
+  this.string('type');
   this.string('description');
 });
 
@@ -70,10 +70,9 @@ server.listen(8000);
 
 # TODO
 
- - Full property type support ( numeric, boolean, array, object )
+ - Integrate as Flatiron plugin via `app.use(flatiron.plugins.restful);`
+ - Full `revalidator` property type support ( numeric, boolean, array, object )
  - Nested schema properties
  - Implement and document browser support
- - Update API to be more consistent with Director syntax ( using `new` keyword )
- - Expose library as Flatiron plugin and integrate with https://github.com/flatiron/flatiron/blob/scaffolding/ branch
- - Better Tests
- - Create helpers for tests
+ - Improve API to be more consistent with Director syntax ( using `new` keyword )
+ - Improve Tests
