@@ -13,7 +13,7 @@ var Creature = resourceful.define('creature', function () {
   //
   // Specify some properties with validation
   //
-  this.string('name');
+  this.string('type');
   this.string('description');
 });
 

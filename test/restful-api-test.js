@@ -22,7 +22,7 @@ var Creature = resourceful.define('creature', function () {
   //
   // Specify some properties with validation
   //
-  this.string('name');
+  this.string('type');
   this.string('description');
 
   //
@@ -65,24 +65,24 @@ suite.use('localhost', 8000)
     .get('/Creature/1')
       .expect(200)
   .next()
-    .put('/Creature/1', { "name" : "Dragon" })
+    .put('/Creature/1', { "type" : "Dragon" })
       .expect(204)
   .next()
     .get('/Creature/1')
       .expect(200)
-      .expect("should have correct name", function (err, res, body) {
+      .expect("should have correct type", function (err, res, body) {
          var result = JSON.parse(body);
-         assert.equal(result.name, "Dragon");
+         assert.equal(result.type, "Dragon");
       })
   .next()
-    .put('/Creature/1', { "name" : "Unicorn" })
+    .put('/Creature/1', { "type" : "Unicorn" })
       .expect(204)
   .next()
     .get('/Creature/1')
       .expect(200)
-      .expect("should have correct name", function (err, res, body) {
+      .expect("should have correct type", function (err, res, body) {
          var result = JSON.parse(body);
-         assert.equal(result.name, "Unicorn");
+         assert.equal(result.type, "Unicorn");
       })
   .next()
     .del('/Creature/1')
@@ -97,14 +97,46 @@ suite.use('localhost', 8000)
     .get('/Creature/2')
       .expect(200)
   .next()
-    .post('/Creature', { "name": "Dragon" })
+    .post('/Creature', { "type": "Dragon" })
       .expect(201)
   .next()
     .get('/Creature/3')
       .expect(200)
-      .expect("should have correct name", function (err, res, body) {
+      .expect("should have correct type", function (err, res, body) {
          var result = JSON.parse(body);
-         assert.equal(result.name, "Dragon");
+         assert.equal(result.type, "Dragon");
       })
+    .next()
+      .post('/Creature/bob', {})
+        .expect(201)
+    .next()
+      .get('/Creature/bob')
+        .expect(200)
+    .next()
+      .put('/Creature/bob', { "type" : "Dragon" })
+        .expect(204)
+    .next()
+      .get('/Creature/bob')
+        .expect(200)
+        .expect("should have correct type", function (err, res, body) {
+           var result = JSON.parse(body);
+           assert.equal(result.type, "Dragon");
+        })
+    .next()
+      .put('/Creature/bob', { "type" : "Unicorn" })
+        .expect(204)
+    .next()
+      .get('/Creature/bob')
+        .expect(200)
+        .expect("should have correct type", function (err, res, body) {
+           var result = JSON.parse(body);
+           assert.equal(result.type, "Unicorn");
+        })
+    .next()
+      .del('/Creature/bob')
+        .expect(204)
+    .next()
+      .get('/Creature/bob')
+        .expect(404)
 
 .export(module);

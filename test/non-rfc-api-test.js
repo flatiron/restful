@@ -22,7 +22,7 @@ var Creature = resourceful.define('creature', function () {
   //
   // Specify some properties with validation
   //
-  this.string('name');
+  this.string('type');
   this.string('description');
 
   //
@@ -72,7 +72,7 @@ suite.use('localhost', 8001)
     .get('/Creature/1')
       .expect(200)
   .next()
-    .post('/Creature/1/update', { "name" : "dragon" })
+    .post('/Creature/1/update', { "type" : "dragon" })
       .expect(204)
   .next()
     .post('/Creature/1/destroy')
@@ -87,14 +87,14 @@ suite.use('localhost', 8001)
     .get('/Creature/2')
       .expect(200)
   .next()
-    .post('/Creature', { "name": "Dragon" })
+    .post('/Creature', { "type": "Dragon" })
       .expect(201)
   .next()
     .get('/Creature/3')
       .expect(200)
-      .expect("should have corrent name", function (err, res, body) {
+      .expect("should have corrent type", function (err, res, body) {
          var result = JSON.parse(body);
-         assert.equal(result.name, "Dragon");
+         assert.equal(result.type, "Dragon");
       })
 
 .export(module);
