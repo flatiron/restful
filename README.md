@@ -45,11 +45,11 @@ var server = http.createServer(function (req, res) {
 
    Router will now dispatch all RESTFul urls for the Creature resource
 
-    POST    /Creature    => Creature.create()
-    GET     /Creature    => Creature.all()
-    GET     /Creature/1  => Creature.show()
-    PUT     /Creature/1  => Creature.update()
-    DELETE  /Creature/1  => Creature.destroy()
+    POST    /Creature     => Creature.create()
+    GET     /Creature     => Creature.all()
+    GET     /Creature/1   => Creature.show()
+    PUT     /Creature/1   => Creature.update()
+    DELETE  /Creature/1   => Creature.destroy()
 
   */
   router.dispatch(req, res, function (err) {
@@ -70,7 +70,7 @@ server.listen(8000);
 
 # TODO
 
- - Integrate as Flatiron plugin via `app.use(flatiron.plugins.restful);`
+ - Integrate as Flatiron plugin via `app.use(flatiron.plugins.http.restful);`
  - Full `revalidator` property type support ( numeric, boolean, array, object )
  - Nested schema properties
  - Implement and document browser support
