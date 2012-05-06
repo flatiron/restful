@@ -1,64 +1,11 @@
 var vows = require('vows'),
     assert = require('assert'),
     APIeasy = require('api-easy'),
-    restful = require('../lib/restful');
-
-
-var formful = require('../lib/restful');
-
-var resourceful = require('resourceful');
-var http = require('http');
-
-
-//
-// 
-//
-var Creature = resourceful.define('creature', function () {
-  //
-  // Specify a storage engine
-  //
-  this.use('memory');
-
-  //
-  // Specify some properties with validation
-  //
-  this.string('type');
-  this.string('description');
-
-  //
-  // Specify timestamp properties
-  //
-  this.timestamps();
-});
-
-//
-// Now that the `Creature` prototype is defined
-// we can add custom logic to be available on all instances
-//
-Creature.prototype.feed = function (food) {
-  this.belly.push(food);
-};
-
-
-var router = restful.createRouter(Creature);
-
-var server = http.createServer(function (req, res) {
-  req.chunks = [];
-  req.on('data', function (chunk) {
-    req.chunks.push(chunk.toString());
-  });
-  router.dispatch(req, res, function (err) {
-    if (err) {
-      res.writeHead(404);
-      res.end();
-    }
-    console.log('Served ' + req.url);
-  });
-});
-
-server.listen(8001);
+    helpers = require('./helpers');
 
 var suite = APIeasy.describe('restful/non-rfc-api-test');
+
+helpers.createServer().listen(8001);
 
 suite.use('localhost', 8001)
   .setHeader('Content-Type', 'application/json')
