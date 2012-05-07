@@ -1,6 +1,8 @@
-# restful - Unreleased Experimental v0.0.0
+# Experimental / Unreleased v0.0.0
 
-Create [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) APIs for [resourceful](http://github.com/flatiron/resourceful) models.
+# restful
+
+Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) [Director](http://github.com/flatiron/director) routers for [resourceful](http://github.com/flatiron/resourceful) models. Can be used stand-alone module or as a `Flatiron` plugin.
 
 # Installation
 
@@ -71,8 +73,8 @@ server.listen(8000);
 # TODO
 
  - Integrate as Flatiron plugin via `app.use(flatiron.plugins.http.restful);`
- - Full `revalidator` property type support ( numeric, boolean, array, object )
- - Nested schema properties
+ - Full `resourceful` property type support ( numeric, boolean, array, object )
+ - Full `resourceful` nested property schema support
  - Implement and document browser support
  - Improve API to be more consistent with Director syntax ( using `new` keyword )
  - Improve Tests
