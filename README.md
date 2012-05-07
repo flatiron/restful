@@ -93,5 +93,4 @@ server.listen(8000);
  - Full `resourceful` property type support ( numeric, boolean, array, object )
  - Full `resourceful` nested property schema support
  - Implement and document browser support
- - Improve API to be more consistent with Director syntax ( using `new` keyword )
  - Improve Tests
