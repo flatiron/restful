@@ -3,7 +3,6 @@
 <hr/>
 # Restful
 
-# Status
 [![Build Status](https://secure.travis-ci.org/flatiron/restful.png)](http://travis-ci.org/flatiron/restful)
 
 Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) [Director](http://github.com/flatiron/director) routers for [resourceful](http://github.com/flatiron/resourceful) models. Can be used as a stand-alone module or as a [Flatiron](http://github.com/flatiron/) plugin.
