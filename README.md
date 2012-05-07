@@ -94,3 +94,4 @@ server.listen(8000);
  - Full `resourceful` nested property schema support
  - Implement and document browser support
  - Improve Tests
+ - Add better error support via `errs` library
