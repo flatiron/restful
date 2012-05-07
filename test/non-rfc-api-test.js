@@ -39,7 +39,7 @@ suite.use('localhost', 8001)
   .next()
     .get('/Creature/3')
       .expect(200)
-      .expect("should have corrent type", function (err, res, body) {
+      .expect("should have correct type", function (err, res, body) {
          var result = JSON.parse(body);
          assert.equal(result.type, "Dragon");
       })
