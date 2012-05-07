@@ -5,7 +5,7 @@ var vows = require('vows'),
 
 var suite = APIeasy.describe('restful/non-rfc-api-test');
 
-helpers.createServer().listen(8001);
+helpers.createServer({ strict: false }).listen(8001);
 
 suite.use('localhost', 8001)
   .setHeader('Content-Type', 'application/json')
