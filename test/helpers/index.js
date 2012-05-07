@@ -6,7 +6,7 @@ var resourceful = require('resourceful');
 var http = require('http');
 
 
-helpers.createServer = function () {
+helpers.createServer = function (options) {
 
   //
   // Create a new Creature resource using the Resourceful library
@@ -29,7 +29,7 @@ helpers.createServer = function () {
     this.timestamps();
   });
 
-  var router = restful.createRouter(Creature);
+  var router = restful.createRouter(Creature, options);
 
   var server = http.createServer(function (req, res) {
     req.chunks = [];
