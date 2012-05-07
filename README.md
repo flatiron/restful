@@ -1,8 +1,11 @@
+
 # Experimental / Unreleased v0.0.0
 
-# restful
+<hr/>
+# Restful
 
-Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) [Director](http://github.com/flatiron/director) routers for [resourceful](http://github.com/flatiron/resourceful) models. Can be used stand-alone module or as a `Flatiron` plugin.
+
+Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) [Director](http://github.com/flatiron/director) routers for [resourceful](http://github.com/flatiron/resourceful) models. Can be used as a stand-alone module or as a [Flatiron](http://github.com/flatiron/) plugin.
 
 # Installation
 
