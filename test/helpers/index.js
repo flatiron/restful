@@ -53,23 +53,37 @@ helpers.createServer = function () {
 helpers.resourceTest = function (name, _id, context) {
   
   //
-  // TODO: Remove this block of code, we should get back ID from created entities
+  // TODO: Remove this block of code, we should get back ID from created entities,
+  //       and specify it for further test paths using context.before()
   //
-    var _startid = _id;
-    if (_id === null) {
-      _id = 1;
-      _startid = "";
-    }
-  //
-  //
-  //
-  
+  if (_id === null) {
+    _id = 1;
+  }
+
   return context
     .get('/Creature')
       .expect(200)
     .next()
-      .post('/Creature/' + _startid, {})
-          .expect(201)
+      .post('/Creature/' + _id, {})
+        .expect(201)
+        .expect("should have correct _id", function (err, res, body) {
+           var result = JSON.parse(body);
+           //
+           // We only need to compare the returned _id if we actually specified an _id on creation
+           //
+           if (_id.length > 0) {
+             assert.equal(result._id, _id);
+           } else {
+             assert(result._id.length > 0, true);
+           }
+           /*
+              TODO Remark: If we had a context.before, we would set _id scope for path here
+              //
+              // Assign _id returned from endpoint as _id for the rest of the test
+              //
+               _id = result._id;
+           */
+        })
     .next()
       .get('/Creature/' + _id)
         .expect(200)
