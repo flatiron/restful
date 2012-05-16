@@ -61,10 +61,10 @@ helpers.resourceTest = function (name, _id, context) {
   }
 
   return context
-    .get('/creature')
+    .get('/creatures')
       .expect(200)
     .next()
-      .post('/creature/' + _id, {})
+      .post('/creatures/' + _id, {})
         .expect(201)
         .expect("should have correct _id", function (err, res, body) {
            var result = JSON.parse(body);
@@ -85,13 +85,13 @@ helpers.resourceTest = function (name, _id, context) {
            */
         })
     .next()
-      .get('/creature/' + _id)
+      .get('/creatures/' + _id)
         .expect(200)
     .next()
-      .put('/creature/' + _id, { "type" : "Dragon" })
+      .put('/creatures/' + _id, { "type" : "Dragon" })
         .expect(204)
     .next()
-      .get('/creature/' + _id)
+      .get('/creatures/' + _id)
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -99,10 +99,10 @@ helpers.resourceTest = function (name, _id, context) {
            assert.equal(result.creature.type, "Dragon");
         })
     .next()
-      .put('/creature/' + _id, { "type" : "Unicorn" })
+      .put('/creatures/' + _id, { "type" : "Unicorn" })
         .expect(204)
     .next()
-      .get('/creature/' + _id)
+      .get('/creatures/' + _id)
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -110,9 +110,9 @@ helpers.resourceTest = function (name, _id, context) {
            assert.equal(result.creature.type, "Unicorn");
         })
     .next()
-      .del('/creature/' + _id)
+      .del('/creatures/' + _id)
         .expect(204)
     .next()
-      .get('/creature/' + _id)
+      .get('/creatures/' + _id)
         .expect(404)
 };

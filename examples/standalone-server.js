@@ -34,19 +34,19 @@ var server = http.createServer(function (req, res) {
 
    Router will now dispatch all RESTFul urls for the Creature resource
 
-     POST    /creature    => Creature.create()
-     GET     /creature    => Creature.all()
-     GET     /creature/1  => Creature.show()
-     PUT     /creature/1  => Creature.update()
-     DELETE  /creature/1  => Creature.destroy()
+     POST    /creatures    => Creature.create()
+     GET     /creatures    => Creature.all()
+     GET     /creatures/1  => Creature.show()
+     PUT     /creatures/1  => Creature.update()
+     DELETE  /creatures/1  => Creature.destroy()
 
    Since not all HTTP clients support PUT and DELETE verbs ( such as forms in web browsers ),
    restful will also map the following browser friendly routes:
 
    If you prefer to not use this option, set { strict: true }
 
-     POST  /creature/1/update  => Creature.update()
-     POST  /creature/1/destroy => Creature.destroy()
+     POST  /creatures/1/update  => Creature.update()
+     POST  /creatures/1/destroy => Creature.destroy()
 
 
   You might also want to consider using a rails-like approach which uses
