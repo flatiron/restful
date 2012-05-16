@@ -61,10 +61,10 @@ helpers.resourceTest = function (name, _id, context) {
   }
 
   return context
-    .get('/Creature')
+    .get('/creature')
       .expect(200)
     .next()
-      .post('/Creature/' + _id, {})
+      .post('/creature/' + _id, {})
         .expect(201)
         .expect("should have correct _id", function (err, res, body) {
            var result = JSON.parse(body);
@@ -85,32 +85,34 @@ helpers.resourceTest = function (name, _id, context) {
            */
         })
     .next()
-      .get('/Creature/' + _id)
+      .get('/creature/' + _id)
         .expect(200)
     .next()
-      .put('/Creature/' + _id, { "type" : "Dragon" })
+      .put('/creature/' + _id, { "type" : "Dragon" })
         .expect(204)
     .next()
-      .get('/Creature/' + _id)
-        .expect(200)
-        .expect("should have correct type", function (err, res, body) {
-           var result = JSON.parse(body);
-           assert.equal(result.type, "Dragon");
-        })
-    .next()
-      .put('/Creature/' + _id, { "type" : "Unicorn" })
-        .expect(204)
-    .next()
-      .get('/Creature/' + _id)
+      .get('/creature/' + _id)
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
-           assert.equal(result.type, "Unicorn");
+           assert.isObject(result.creature)
+           assert.equal(result.creature.type, "Dragon");
         })
     .next()
-      .del('/Creature/' + _id)
+      .put('/creature/' + _id, { "type" : "Unicorn" })
         .expect(204)
     .next()
-      .get('/Creature/' + _id)
+      .get('/creature/' + _id)
+        .expect(200)
+        .expect("should have correct type", function (err, res, body) {
+           var result = JSON.parse(body);
+           assert.isObject(result.creature)
+           assert.equal(result.creature.type, "Unicorn");
+        })
+    .next()
+      .del('/creature/' + _id)
+        .expect(204)
+    .next()
+      .get('/creature/' + _id)
         .expect(404)
 };
