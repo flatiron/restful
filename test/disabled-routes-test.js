@@ -3,7 +3,7 @@ var APIeasy = require('api-easy'),
 
 // HTTP Server
 
-helpers.createServer({strict: true, disable: ["get","destroy","update","create","all"]})
+helpers.createServer({strict: false, disable: ["get","create","update", "destroy","all"]})
        .listen(8002);
 
 // Modified version from helpers/index.js
@@ -32,6 +32,15 @@ var resourceTest = function (name, _id, context) {
         .expect(404)
     .next()
       .get('/creatures/' + _id)
+        .expect(404)
+    .next()
+      .get('/creatures/' + _id)
+        .expect(404)
+    .next()
+      .post('creatures/' + _id + '/update')
+        .expect(404)
+    .next()
+      .post('creatures/' + _id + '/destroy')
         .expect(404)
 };
 
