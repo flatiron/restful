@@ -3,7 +3,7 @@ var APIeasy = require('api-easy'),
 
 // HTTP Server
 
-helpers.createServer({strict: false, disable: ["get","create","update", "destroy","all"]})
+helpers.createServer({strict: false, disable: ["get","destroy","create","update","all"]})
        .listen(8002);
 
 // Modified version from helpers/index.js
