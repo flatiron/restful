@@ -1,14 +1,19 @@
 {
-  "author": "Nodejitsu Inc. <info@nodejitsu.com>",
   "name": "restful",
+  "description": "Restful routing using resourceful and director.",
+  "author": "Nodejitsu Inc. <info@nodejitsu.com>",
+  "contributors": [
+    { "name": "Marak Squires", "email": "marak@nodejitsu.com" },
+    { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" }
+  ],
   "version": "0.0.0",
   "main": "./lib/restful",
   "dependencies": {
     "director": "1.0.x",
-    "vows": "0.6.x",
     "resourceful": "0.1.x"
   },
   "devDependencies": {
+    "vows": "0.6.x",
     "api-easy": "0.3.x"
   },
   "optionalDependencies": {},
