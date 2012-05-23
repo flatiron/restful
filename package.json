@@ -1,6 +1,11 @@
 {
   "name": "restful",
+  "description": "Restful routing using resourceful and director.",
   "author": "Nodejitsu Inc. <info@nodejitsu.com>",
+  "contributors": [
+    { "name": "Marak Squires", "email": "marak@nodejitsu.com" },
+    { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" }
+  ],
   "version": "0.0.0",
   "main": "./lib/restful",
   "dependencies": {
