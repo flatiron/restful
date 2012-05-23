@@ -1,7 +1,7 @@
 /*
  * app.js: Test fixtures for http-users tests
  *
- * (C) 2010, Nodejitsu Inc.
+ * (C) 2012, Nodejitsu Inc.
  *
  */
  
@@ -11,14 +11,12 @@ var flatiron = require('flatiron'),
 
 var app = module.exports = flatiron.app;
 
-
 app.resources = app.resources || {};
 
 //
 // Create a new Creature resource using the Resourceful library
 //
 app.resources.Creature = resourceful.define('creature', function () {
-  
   this.restful = true;
   
   //
@@ -43,11 +41,9 @@ app.use(flatiron.plugins.http, {
 //
 app.use(restful);
 
-app.router.get('/', function(){
-//  console.log(app.router.routes);
+app.router.get('/', function () {
   this.res.text(niceTable(app.router.routes));
   this.res.end();
-  
 })
 
 var traverse = require('traverse');
@@ -57,25 +53,26 @@ var traverse = require('traverse');
 // TODO: Move this to director core?
 //
 function niceTable (routes) {
-
   var niceRoutes = routes,
-      str = '', 
-      verbs = ['get', 'post', 'put', 'delete'];
+      verbs = ['get', 'post', 'put', 'delete'],
+      str = '';
 
   traverse(niceRoutes).forEach(visitor);
 
   function visitor () {
     var path = this.path, 
     pad = '';
-    if(path[path.length - 1] && verbs.indexOf(path[path.length - 1]) !== -1) {
+    if (path[path.length - 1] && verbs.indexOf(path[path.length - 1]) !== -1) {
       pad += path.pop().toUpperCase();
-      for(var i = pad.length; i < 8; i++) {
+      for (var i = pad.length; i < 8; i++) {
         pad += ' ';
       }
+      
       path = path.join('/');
       str += pad + '/' + path  + ' \n'
     }
   }
+  
   return str;
 }
 

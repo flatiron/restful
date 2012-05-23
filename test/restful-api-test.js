@@ -1,13 +1,17 @@
+/*
+ * restful-api-test.js: Tests for purely `restful` routes 
+ *
+ * (C) 2012, Nodejitsu Inc.
+ *
+ */
+
 var vows = require('vows'),
     assert = require('assert'),
     APIeasy = require('api-easy'),
-    restful = require('../lib/restful');
-
-
-var resourceful = require('resourceful');
-var http = require('http');
-
-var helpers = require('./helpers');
+    restful = require('../lib/restful'),
+    resourceful = require('resourceful'),
+    http = require('http'),
+    helpers = require('./helpers');
 
 var suite = APIeasy.describe('restful/restful-api-test');
 
@@ -22,5 +26,4 @@ suite.use('localhost', 8000)
       helpers.resourceTest('Creature', '2', suite)
     .next()
       helpers.resourceTest('Creature', 'bob', suite)
-
 .export(module);
