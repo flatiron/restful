@@ -1,3 +1,10 @@
+/*
+ * non-rfc-api-test.js: Tests for non-strict `restful` routes 
+ *
+ * (C) 2012, Nodejitsu Inc.
+ *
+ */
+ 
 var vows = require('vows'),
     assert = require('assert'),
     APIeasy = require('api-easy'),
@@ -19,11 +26,11 @@ suite.use('localhost', 8001)
     .get('/creatures/1')
       .expect(200)
   .next()
-    .post('/creatures/1/update', { "type" : "dragon" })
+    .post('/creatures/1/update', { 'type' : 'dragon' })
       .expect(204)
   .next()
     .post('/creatures/1/destroy')
-      .expect(204)
+      .expect(200)
   .next()
     .get('/creatures/1')
       .expect(404)
@@ -34,14 +41,14 @@ suite.use('localhost', 8001)
     .get('/creatures/2')
       .expect(200)
   .next()
-    .post('/creatures', { "type": "Dragon" })
+    .post('/creatures', { 'type': 'Dragon' })
       .expect(201)
   .next()
     .get('/creatures/3')
       .expect(200)
-      .expect("should have correct type", function (err, res, body) {
+      .expect('should have correct type', function (err, res, body) {
          var result = JSON.parse(body);
          assert.isObject(result.creature)
-         assert.equal(result.creature.type, "Dragon");
+         assert.equal(result.creature.type, 'Dragon');
       })
 .export(module);

@@ -67,28 +67,27 @@ helpers.resourceTest = function (name, _id, context) {
       .post('/creatures/' + _id, {})
         .expect(201)
         .expect("should have correct _id", function (err, res, body) {
-           var result = JSON.parse(body);
-           //
-           // We only need to compare the returned _id if we actually specified an _id on creation
-           //
-           if (_id.length > 0) {
-             assert.equal(result._id, _id);
-           } else {
-             assert(result._id.length > 0, true);
-           }
-           /*
-              TODO Remark: If we had a context.before, we would set _id scope for path here
-              //
-              // Assign _id returned from endpoint as _id for the rest of the test
-              //
-               _id = result._id;
-           */
+          var result = JSON.parse(body).creature;
+          //
+          // We only need to compare the returned _id if we actually specified an _id on creation
+          //
+          if (_id) {
+            assert.equal(result._id, _id);
+          } else {
+            assert(result._id.length > 0, true);
+          }
+          
+          // TODO Remark: If we had a context.before, we would set _id scope for path here
+          //
+          // Assign _id returned from endpoint as _id for the rest of the test
+          //
+          // _id = result._id;
         })
     .next()
       .get('/creatures/' + _id)
         .expect(200)
     .next()
-      .put('/creatures/' + _id, { "type" : "Dragon" })
+      .put('/creatures/' + _id, { 'type' : "Dragon" })
         .expect(204)
     .next()
       .get('/creatures/' + _id)
@@ -99,7 +98,7 @@ helpers.resourceTest = function (name, _id, context) {
            assert.equal(result.creature.type, "Dragon");
         })
     .next()
-      .put('/creatures/' + _id, { "type" : "Unicorn" })
+      .put('/creatures/' + _id, { 'type' : "Unicorn" })
         .expect(204)
     .next()
       .get('/creatures/' + _id)
@@ -111,7 +110,7 @@ helpers.resourceTest = function (name, _id, context) {
         })
     .next()
       .del('/creatures/' + _id)
-        .expect(204)
+        .expect(200)
     .next()
       .get('/creatures/' + _id)
         .expect(404)
