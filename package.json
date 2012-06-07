@@ -6,8 +6,12 @@
     { "name": "Marak Squires", "email": "marak@nodejitsu.com" },
     { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" }
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./lib/restful",
+  "peerDependencies": {
+    "director": "1.0.x",
+    "resourceful": "0.1.x"
+  },
   "dependencies": {
     "director": "1.0.x",
     "resourceful": "0.1.x"
