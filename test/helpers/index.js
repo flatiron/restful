@@ -110,7 +110,7 @@ helpers.resourceTest = function (name, _id, context) {
         })
     .next()
       .del('/creatures/' + _id)
-        .expect(200)
+        .expect(204)
     .next()
       .get('/creatures/' + _id)
         .expect(404)
