@@ -24,9 +24,9 @@ suite.use('localhost', 8001)
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
          var result = JSON.parse(body);
-         assert.equal(result[0].property, 'email');
-         assert.equal(result[0].expected, true);
-         assert.equal(result[0].message, 'is required');
+         assert.equal(result.validate.errors[0].property, 'email');
+         assert.equal(result.validate.errors[0].expected, true);
+         assert.equal(result.validate.errors[0].message, 'is required');
       })
   .next()
     .get('/users/1')
@@ -36,10 +36,10 @@ suite.use('localhost', 8001)
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
-        assert.equal(result[0].property, 'email');
-        assert.equal(result[0].expected, 'email');
-        assert.equal(result[0].attribute, 'format');
-        assert.equal(result[0].message, 'is not a valid email');
+        assert.equal(result.validate.errors[0].property, 'email');
+        assert.equal(result.validate.errors[0].expected, 'email');
+        assert.equal(result.validate.errors[0].attribute, 'format');
+        assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
   .next()
     .get('/users/1')
@@ -58,11 +58,12 @@ suite.use('localhost', 8001)
     .post('/users/1/update', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
+        console.log(body)
         var result = JSON.parse(body);
-        assert.equal(result[0].property, 'email');
-        assert.equal(result[0].expected, 'email');
-        assert.equal(result[0].attribute, 'format');
-        assert.equal(result[0].message, 'is not a valid email');
+        assert.equal(result.validate.errors[0].property, 'email');
+        assert.equal(result.validate.errors[0].expected, 'email');
+        assert.equal(result.validate.errors[0].attribute, 'format');
+        assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
 
 .export(module);
