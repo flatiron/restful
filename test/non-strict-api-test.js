@@ -1,5 +1,5 @@
 /*
- * non-rfc-api-test.js: Tests for non-strict `restful` routes 
+ * non-strict-api-test.js: Tests for non-strict `restful` routes 
  *
  * (C) 2012, Nodejitsu Inc.
  *
@@ -10,7 +10,7 @@ var vows = require('vows'),
     APIeasy = require('api-easy'),
     helpers = require('./helpers');
 
-var suite = APIeasy.describe('restful/non-rfc-api-test');
+var suite = APIeasy.describe('restful/non-strict-api-test');
 
 helpers.createServer(helpers.Creature, { strict: false }).listen(8001);
 

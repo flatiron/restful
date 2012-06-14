@@ -1,5 +1,5 @@
 /*
- * non-rfc-type-validation-test.js: Tests for basic validation checking for resources
+ * non-strict-type-validation-test.js: Tests for basic validation checking for resources
  *
  * (C) 2012, Nodejitsu Inc.
  *
@@ -10,7 +10,7 @@ var vows = require('vows'),
     APIeasy = require('api-easy'),
     helpers = require('./helpers');
 
-var suite = APIeasy.describe('restful/non-type-validation-test');
+var suite = APIeasy.describe('restful/non-strict-type-validation-test');
 
 helpers.createServer(helpers.User, { strict: false }).listen(8001);
 
