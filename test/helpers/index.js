@@ -35,12 +35,12 @@ helpers.User = resourceful.define('user', function () {
   // Specify a storage engine
   //
   this.use('memory');
+  this.string('name');
 
   //
   // Specify some properties with validation
   //
-  this.string('name');
-  this.string('email', { format: 'email' })
+  this.string('email', { format: 'email', required: true })
 
   //
   // Specify timestamp properties
