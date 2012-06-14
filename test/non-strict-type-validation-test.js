@@ -54,4 +54,15 @@ suite.use('localhost', 8001)
   .next()
     .get('/users/1')
       .expect(200)
+  .next()
+    .post('/users/1/update', { email: "NOT_VALID_EMAIL@123" })
+      .expect(422)
+      .expect('should return correct validation error', function (err, res, body) {
+        var result = JSON.parse(body);
+        assert.equal(result[0].property, 'email');
+        assert.equal(result[0].expected, 'email');
+        assert.equal(result[0].attribute, 'format');
+        assert.equal(result[0].message, 'is not a valid email');
+      })
+
 .export(module);
