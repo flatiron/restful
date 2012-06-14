@@ -1,5 +1,5 @@
 /*
- * restful-type-validation-test.js: Tests for non-strict `restful` routes 
+ * restful-type-validation-test.js: Tests for basic validation checking for resources
  *
  * (C) 2012, Nodejitsu Inc.
  *
@@ -22,7 +22,7 @@ suite.use('localhost', 8001)
   .next()
     .post('/users')
       .expect(422)
-      .expect('should have correct validation message', function (err, res, body) {
+      .expect('should return correct validation error', function (err, res, body) {
          var result = JSON.parse(body);
          assert.equal(result[0].property, 'email');
          assert.equal(result[0].expected, true);
@@ -34,11 +34,36 @@ suite.use('localhost', 8001)
   .next()
     .post('/users', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
-      .expect('should have correct validation message', function (err, res, body) {
+      .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
         assert.equal(result[0].property, 'email');
-        assert.equal(result[0].attribute, 'format');
         assert.equal(result[0].expected, 'email');
+        assert.equal(result[0].attribute, 'format');
+        assert.equal(result[0].message, 'is not a valid email');
+      })
+  .next()
+    .get('/users/1')
+      .expect(404)
+  .next()
+    .post('/new')
+      .expect(422)
+      .expect('should return correct validation error', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.equal(result[0].property, 'email');
+         assert.equal(result[0].expected, true);
+         assert.equal(result[0].message, 'is required');
+      })
+  .next()
+    .get('/users/1')
+      .expect(404)
+  .next()
+    .post('/new', { email: "NOT_VALID_EMAIL@123" })
+      .expect(422)
+      .expect('should return correct validation error', function (err, res, body) {
+        var result = JSON.parse(body);
+        assert.equal(result[0].property, 'email');
+        assert.equal(result[0].expected, 'email');
+        assert.equal(result[0].attribute, 'format');
         assert.equal(result[0].message, 'is not a valid email');
       })
   .next()
@@ -49,17 +74,19 @@ suite.use('localhost', 8001)
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);
-        //
-        // TODO: The returned user object from resourceful appears to be formatted oddly,
-        // why the response to the creation of a single user: 
-        //
-        //  { users : { _id: "123" } } 
-        //
-        //  it should be: 
-        //
-        //  { _id: "123" } or { user: { _id: "123" } or { users [{ _id: "123" }] }
-        //
-        //
-        assert.isDefined(result.users);
+        assert.isDefined(result.user);
       })
+  .next()
+    .get('/users/1')
+      .expect(200)
+  .next()
+    .post('/new', { email: "marak.squires@gmail.com" })
+      .expect(201)
+      .expect('should respond with created user', function (err, res, body) {
+        var result = JSON.parse(body);
+        assert.isDefined(result.user);
+      })
+  .next()
+    .get('/users/2')
+      .expect(200)
 .export(module);
