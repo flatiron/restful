@@ -5,31 +5,52 @@ var restful = require('../../lib/restful');
 var resourceful = require('resourceful');
 var http = require('http');
 
-
-helpers.createServer = function (options) {
+//
+// Create a new Creature resource using the Resourceful library
+//
+helpers.Creature = resourceful.define('creature', function () {
+  //
+  // Specify a storage engine
+  //
+  this.use('memory');
 
   //
-  // Create a new Creature resource using the Resourceful library
+  // Specify some properties with validation
   //
-  var Creature = resourceful.define('creature', function () {
-    //
-    // Specify a storage engine
-    //
-    this.use('memory');
+  this.string('type');
+  this.string('description');
 
-    //
-    // Specify some properties with validation
-    //
-    this.string('type');
-    this.string('description');
+  //
+  // Specify timestamp properties
+  //
+  this.timestamps();
+});
 
-    //
-    // Specify timestamp properties
-    //
-    this.timestamps();
-  });
 
-  var router = restful.createRouter(Creature, options);
+//
+// Create a new Creature resource using the Resourceful library
+//
+helpers.User = resourceful.define('user', function () {
+  //
+  // Specify a storage engine
+  //
+  this.use('memory');
+
+  //
+  // Specify some properties with validation
+  //
+  this.string('name');
+  this.string('email', { format: 'email' })
+
+  //
+  // Specify timestamp properties
+  //
+  this.timestamps();
+});
+
+helpers.createServer = function (resource, options) {
+
+  var router = restful.createRouter(resource, options);
 
   var server = http.createServer(function (req, res) {
     req.chunks = [];

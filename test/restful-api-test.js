@@ -15,7 +15,7 @@ var vows = require('vows'),
 
 var suite = APIeasy.describe('restful/restful-api-test');
 
-helpers.createServer({ strict: true }).listen(8000);
+helpers.createServer(helpers.Creature, { strict: true }).listen(8000);
 
 suite.use('localhost', 8000)
   .setHeader('Content-Type', 'application/json')
