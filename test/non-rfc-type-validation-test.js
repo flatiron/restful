@@ -1,5 +1,5 @@
 /*
- * restful-type-validation-test.js: Tests for basic validation checking for resources
+ * non-rfc-type-validation-test.js: Tests for basic validation checking for resources
  *
  * (C) 2012, Nodejitsu Inc.
  *
@@ -10,9 +10,9 @@ var vows = require('vows'),
     APIeasy = require('api-easy'),
     helpers = require('./helpers');
 
-var suite = APIeasy.describe('restful/type-validation-test');
+var suite = APIeasy.describe('restful/non-type-validation-test');
 
-helpers.createServer(helpers.User, { strict: true }).listen(8001);
+helpers.createServer(helpers.User, { strict: false }).listen(8001);
 
 suite.use('localhost', 8001)
   .setHeader('Content-Type', 'application/json')
@@ -20,7 +20,7 @@ suite.use('localhost', 8001)
     .get('/users')
       .expect(200)
   .next()
-    .post('/users')
+    .post('/new')
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
          var result = JSON.parse(body);
@@ -32,7 +32,7 @@ suite.use('localhost', 8001)
     .get('/users/1')
       .expect(404)
   .next()
-    .post('/users', { email: "NOT_VALID_EMAIL@123" })
+    .post('/new', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -45,7 +45,7 @@ suite.use('localhost', 8001)
     .get('/users/1')
       .expect(404)
   .next()
-    .post('/users', { email: "marak.squires@gmail.com" })
+    .post('/new', { email: "marak.squires@gmail.com" })
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);
@@ -54,14 +54,4 @@ suite.use('localhost', 8001)
   .next()
     .get('/users/1')
       .expect(200)
-  .next()
-    .put('/users/1', { email: "NOT_VALID_EMAIL@123" })
-      .expect(422)
-      .expect('should return correct validation error', function (err, res, body) {
-        var result = JSON.parse(body);
-        assert.equal(result[0].property, 'email');
-        assert.equal(result[0].expected, 'email');
-        assert.equal(result[0].attribute, 'format');
-        assert.equal(result[0].message, 'is not a valid email');
-      })
 .export(module);
