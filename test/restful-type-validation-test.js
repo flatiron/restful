@@ -64,4 +64,40 @@ suite.use('localhost', 8001)
         assert.equal(result.validate.errors[0].attribute, 'format');
         assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
+  .next()
+    .post('/users', { email: "marak.squires@gmail.com" })
+      .expect(201)
+      .expect('should respond with created user', function (err, res, body) {
+        var result = JSON.parse(body);
+        assert.isDefined(result.user);
+      })
+  .next()
+    .get('/users/2')
+      .expect(200)
+  .next()
+    .post('/users', { email: "NOT_VALID_EMAIL@123", age: "50" })
+      .expect(422)
+      .expect('should return correct validation error', function (err, res, body) {
+        var result = JSON.parse(body);
+        assert.equal(result.validate.errors[0].property, 'email');
+        assert.equal(result.validate.errors[0].expected, 'email');
+        assert.equal(result.validate.errors[0].attribute, 'format');
+        assert.equal(result.validate.errors[0].message, 'is not a valid email');
+        assert.equal(result.validate.errors[1].property, 'age');
+        assert.equal(result.validate.errors[1].expected, 'number');
+        assert.equal(result.validate.errors[1].message, 'is not a valid age');
+      })
+  .next()
+    .post('/users', { email: "marak.squires@gmail.com", age: "50" })
+      .expect(422)
+      .expect('should return correct validation error', function (err, res, body) {
+        var result = JSON.parse(body);
+        assert.equal(result.validate.errors[0].property, 'age');
+        assert.equal(result.validate.errors[0].expected, 'number');
+        assert.equal(result.validate.errors[0].message, 'is not a valid age');
+      })
+  .next()
+    .post('/users', { email: "marak.squires@gmail.com", age: 50 })
+      .expect(201)
+
 .export(module);

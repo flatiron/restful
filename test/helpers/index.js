@@ -43,6 +43,11 @@ helpers.User = resourceful.define('user', function () {
   this.string('email', { format: 'email', required: true })
 
   //
+  // Specify a Number type
+  //
+  this.number('age', { message: 'is not a valid age' });
+
+  //
   // Specify timestamp properties
   //
   this.timestamps();

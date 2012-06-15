@@ -58,12 +58,25 @@ suite.use('localhost', 8001)
     .post('/users/1/update', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
-        console.log(body)
         var result = JSON.parse(body);
         assert.equal(result.validate.errors[0].property, 'email');
         assert.equal(result.validate.errors[0].expected, 'email');
         assert.equal(result.validate.errors[0].attribute, 'format');
         assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
+  .next()
+    /* Test String -> Number cohersions for non-strict mode */
+    .post('/users', { email: "marak.squires@gmail.com", age: "50" })
+      .expect(201)
+  .next()
+    .post('/new',   { email: "marak.squires@gmail.com", age: "50" })
+      .expect(201)
+  .next()
+    .post('/users', { email: "marak.squires@gmail.com", age: 50 })
+      .expect(201)
+  .next()
+    .post('/new',   { email: "marak.squires@gmail.com", age: 50 })
+      .expect(201)
+
 
 .export(module);
