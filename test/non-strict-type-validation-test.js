@@ -20,7 +20,7 @@ suite.use('localhost', 8001)
     .get('/users')
       .expect(200)
   .next()
-    .post('/new')
+    .post('/users')
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
          var result = JSON.parse(body);
@@ -32,7 +32,7 @@ suite.use('localhost', 8001)
     .get('/users/1')
       .expect(404)
   .next()
-    .post('/new', { email: "NOT_VALID_EMAIL@123" })
+    .post('/users', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -45,7 +45,7 @@ suite.use('localhost', 8001)
     .get('/users/1')
       .expect(404)
   .next()
-    .post('/new', { email: "marak.squires@gmail.com" })
+    .post('/users', { email: "marak.squires@gmail.com" })
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);
@@ -69,13 +69,13 @@ suite.use('localhost', 8001)
     .post('/users', { email: "marak.squires@gmail.com", age: "50" })
       .expect(201)
   .next()
-    .post('/new',   { email: "marak.squires@gmail.com", age: "50" })
+    .post('/users',   { email: "marak.squires@gmail.com", age: "50" })
       .expect(201)
   .next()
     .post('/users', { email: "marak.squires@gmail.com", age: 50 })
       .expect(201)
   .next()
-    .post('/new',   { email: "marak.squires@gmail.com", age: 50 })
+    .post('/users',   { email: "marak.squires@gmail.com", age: 50 })
       .expect(201)
 
 

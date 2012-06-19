@@ -134,6 +134,19 @@ helpers.resourceTest = function (name, _id, context) {
            assert.isObject(result.creature)
            assert.equal(result.creature.type, "Unicorn");
         })
+    /* Remark: Tests for testing _id updates of resources
+    .next()
+      .put('/creatures/' + _id, { 'type' : "Unicorn", "_id": "charlie" })
+        .expect(204)
+    .next()
+      .get('/creatures/charlie')
+        .expect(200)
+        .expect("should have correct type", function (err, res, body) {
+           var result = JSON.parse(body);
+           assert.isObject(result.creature)
+           assert.equal(result.creature.type, "Unicorn");
+        })
+     */
     .next()
       .del('/creatures/' + _id)
         .expect(204)
