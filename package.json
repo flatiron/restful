@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "director": "1.0.x",
-    "resourceful": "0.1.x"
+    "resourceful": "0.1.x",
+    "utile": "0.1.x"
   },
   "devDependencies": {
     "vows": "0.6.x",
