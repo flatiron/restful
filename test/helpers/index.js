@@ -24,6 +24,11 @@ helpers.Creature = resourceful.define('creature', function () {
   // Specify timestamp properties
   //
   this.timestamps();
+
+  //
+  // Specify this resource can be handled by restful
+  //
+  this.restful = true;
 });
 
 
@@ -153,4 +158,34 @@ helpers.resourceTest = function (name, _id, context) {
     .next()
       .get('/creatures/' + _id)
         .expect(404)
+};
+
+//
+//  Helper function for initialize a flatiron app with restful plugin loaded.
+//
+helpers.createFlatironServer = function (port) {
+  var flatiron = require('flatiron'),
+      app      = flatiron.app;
+
+  app.resources = { Creature: helpers.Creature };
+
+  app.use(flatiron.plugins.http, {
+    headers: {
+      'x-powered-by': 'flatiron ' + flatiron.version
+    }
+  });
+
+  app.use(restful);
+
+  return {
+    "Once the app is started": {
+      topic: function () {
+        app.start(port || 8080, this.callback);
+      },
+      "it should have the appropriate resource loaded": function () {
+        assert.isObject(app.resources);
+        assert.isFunction(app.resources.Creature);
+      }
+    }
+  };
 };
