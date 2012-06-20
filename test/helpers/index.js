@@ -185,6 +185,11 @@ helpers.createFlatironServer = function (port) {
       "it should have the appropriate resource loaded": function () {
         assert.isObject(app.resources);
         assert.isFunction(app.resources.Creature);
+      },
+      "it should have the appropriate routes defined": function () {
+        assert.isObject(app.router);
+        assert.isObject(app.router.routes);
+        assert.isObject(app.router.routes.creatures);
       }
     }
   };

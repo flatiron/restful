@@ -20,7 +20,9 @@
   },
   "devDependencies": {
     "vows": "0.6.x",
-    "api-easy": "0.3.x"
+    "api-easy": "0.3.x",
+    "flatiron": "0.2.x",
+    "union": "0.3.x"
   },
   "optionalDependencies": {},
   "engines": {
