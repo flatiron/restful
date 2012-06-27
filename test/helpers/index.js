@@ -9,10 +9,13 @@ var http = require('http');
 // Create a new Creature resource using the Resourceful library
 //
 helpers.Creature = resourceful.define('creature', function () {
+
+  var self = this;
   //
   // Specify a storage engine
   //
   this.use('memory');
+  //this.use('couchdb', {database: "test3" })
 
   //
   // Specify some properties with validation
@@ -24,8 +27,46 @@ helpers.Creature = resourceful.define('creature', function () {
   // Specify timestamp properties
   //
   this.timestamps();
-});
+  this.number('life');
 
+  this.feed = function (_id, options, callback) {
+    self.get(_id, function(err, creature){
+      if(err) {
+        return callback(err);
+      }
+      var life = creature.life + 1;
+      self.update(_id, { life: life }, function(err, result){
+        callback(null, 'I have been fed my life is: ' + result.life);
+      });
+    });
+  }
+  this.feed.remote = true;
+
+  this.hit = function (_id, options, callback) {
+    self.get(_id, function(err, creature){
+      if(err) {
+        return callback(err);
+      }
+      var life = creature.life - 1;
+      self.update(_id, { life: life }, function(err, result){
+        callback(null, 'I have been hit my life is: ' + result.life);
+      });
+    });
+  }
+  this.hit.remote = true;
+
+
+  this._die = function (food) {
+    //
+    // Remark: We'll consider the _die function "private",
+    // in the sense that restful will not expose it
+    //
+    console.log('creature died.');
+  }
+  //
+  // _die is not set to remote, so it won't be exposed
+  //
+});
 
 //
 // Create a new Creature resource using the Resourceful library
@@ -65,7 +106,27 @@ helpers.Song = resourceful.define('song', function () {
   this.number('bpm');
   this.string('description');
   this.string('title');
+  this.bool('playing');
 });
+
+helpers.Song.play = function () {
+  this.playing = true;
+};
+helpers.Song.play.remote = true;
+
+helpers.Song.pause = function () {
+  this.playing = false;
+};
+helpers.Song.pause.remote = true;
+
+helpers.Song._encode = function () {
+  //
+  // Consider this a "private" method,
+  // in that it won't be exposed through restful
+  //
+};
+
+
 
 helpers.Song.parent('album');
 
@@ -136,7 +197,7 @@ helpers.resourceTest = function (name, _id, context) {
            assert.equal(result.creature.type, "Dragon");
         })
     .next()
-      .put('/creatures/' + _id, { 'type' : "Unicorn" })
+      .put('/creatures/' + _id, { 'type' : "Unicorn", "life": 10 })
         .expect(204)
     .next()
       .get('/creatures/' + _id)
@@ -146,6 +207,78 @@ helpers.resourceTest = function (name, _id, context) {
            assert.isObject(result.creature)
            assert.equal(result.creature.type, "Unicorn");
         })
+    .next()
+      .get('/creatures/' + _id + '/feed')
+        .expect(200)
+        .expect("should respond with correct message", function (err, res, body) {
+           assert.isNull(err);
+           var result = JSON.parse(body);
+           assert.equal(result.result, "I have been fed my life is: 11");
+        })
+    .next()
+      .get('/creatures/' + _id)
+        .expect(200)
+        .expect("should have correct life", function (err, res, body) {
+          var result = JSON.parse(body);
+          assert.isObject(result.creature)
+          assert.equal(result.creature.life, "11");
+        })
+    .next()
+      .post('/creatures/' + _id + '/feed')
+        .expect(200)
+        .expect("should respond with correct message", function (err, res, body) {
+           assert.isNull(err);
+           var result = JSON.parse(body);
+           assert.equal(result.result, "I have been fed my life is: 12");
+        })
+    .next()
+      .get('/creatures/' + _id)
+        .expect(200)
+        .expect("should have correct life", function (err, res, body) {
+          var result = JSON.parse(body);
+          assert.isObject(result.creature)
+          assert.equal(result.creature.life, "12");
+        })
+    .next()
+      .get('/creatures/' + _id + '/hit')
+        .expect(200)
+        .expect("should respond with correct message", function (err, res, body) {
+           assert.isNull(err);
+           var result = JSON.parse(body);
+           assert.equal(result.result, "I have been hit my life is: 11");
+        })
+    .next()
+      .get('/creatures/' + _id)
+        .expect(200)
+        .expect("should have correct life", function (err, res, body) {
+          var result = JSON.parse(body);
+          assert.isObject(result.creature)
+          assert.equal(result.creature.life, "11");
+        })
+    .next()
+      .post('/creatures/' + _id + '/hit')
+        .expect(200)
+        .expect("should respond with correct message", function (err, res, body) {
+           assert.isNull(err);
+           var result = JSON.parse(body);
+           assert.equal(result.result, "I have been hit my life is: 10");
+        })
+    .next()
+      .get('/creatures/' + _id)
+        .expect(200)
+        .expect("should have correct life", function (err, res, body) {
+          var result = JSON.parse(body);
+          assert.isObject(result.creature)
+          assert.equal(result.creature.life, "10");
+        })
+    .next()
+      .get('/creatures/' + _id + '/_die')
+        .expect(404)
+    .next()
+      .post('/creatures/' + _id + '/_die')
+        .expect(404)
+
+
     /* Remark: Tests for testing _id updates of resources
     .next()
       .put('/creatures/' + _id, { 'type' : "Unicorn", "_id": "charlie" })
