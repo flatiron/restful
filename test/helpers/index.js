@@ -53,10 +53,24 @@ helpers.User = resourceful.define('user', function () {
   this.timestamps();
 });
 
+helpers.Album = resourceful.define('album', function () {
+  //this.use('couchdb', {database: "test3" })
+  this.use('memory');
+  this.string('title');
+});
+
+helpers.Song = resourceful.define('song', function () {
+  //this.use('couchdb', {database: "test3" })
+  this.use('memory');
+  this.number('bpm');
+  this.string('description');
+  this.string('title');
+});
+
+helpers.Song.parent('album');
+
 helpers.createServer = function (resource, options) {
-
   var router = restful.createRouter(resource, options);
-
   var server = http.createServer(function (req, res) {
     req.chunks = [];
     req.on('data', function (chunk) {
@@ -70,9 +84,7 @@ helpers.createServer = function (resource, options) {
       console.log('Served ' + req.url);
     });
   });
-
   return server;
-
 }
 
 
@@ -154,3 +166,4 @@ helpers.resourceTest = function (name, _id, context) {
       .get('/creatures/' + _id)
         .expect(404)
 };
+
