@@ -33,7 +33,7 @@ If you prefer to not use this option, set { strict: true }
     POST  /creatures/1/update  => Creature.update()
     POST  /creatures/1/destroy => Creature.destroy()
 
-You might also want to consider using a rails-like approach which uses the convention of a reserved <form> input field called "_method" which contains either "PUT" or "DELETE"
+You might also want to consider using a rails-like approach which uses the convention of a reserved `<form>` input field called "_method" which contains either "PUT" or "DELETE"
 
    see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js
 
