@@ -10,7 +10,7 @@ var vows = require('vows'),
     APIeasy = require('api-easy'),
     helpers = require('../helpers');
 
-var suite = APIeasy.describe('restful/non-strict-api-test');
+var suite = APIeasy.describe('restful/relational/one-many');
 
 helpers.createServer(helpers.Album, { strict: false }).listen(8003);
 
@@ -28,10 +28,17 @@ suite.use('localhost', 8003)
   .next()
     .post('/songs/random-no-album-track')
       .expect(201)
+      .expect('should respond with created song', function (err, res, body) {
+        var result = JSON.parse(body);
+        assert.isObject(result.song)
+        assert.equal(result.song.resource, 'Song');
+        assert.equal(result.song._id, 'random-no-album-track');
+        assert.isNull(result.song.album_id);
+      })
   .next()
     .get('/songs/random-no-album-track')
       .expect(200)
-      .expect('should correct song', function (err, res, body) {
+      .expect('should respond with correct song', function (err, res, body) {
          var result = JSON.parse(body);
          assert.isObject(result.song)
          assert.equal(result.song.resource, 'Song');  

@@ -106,7 +106,7 @@ helpers.Song = resourceful.define('song', function () {
   this.number('bpm');
   this.string('description');
   this.string('title');
-  this.bool('playing');
+  this.bool('playing', { default: false });
 });
 
 helpers.Song.play = function () {
