@@ -8,6 +8,58 @@ Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) 
 
      npm install restful
 
+
+# Explanation
+
+### Core Mappings
+
+  By default, `restful` will map the following `Resourceful` methods.
+
+    POST    /creatures    => Creature.create()
+    GET     /creatures    => Creature.all()
+    GET     /creatures/1  => Creature.show()
+    PUT     /creatures/1  => Creature.update()
+    DELETE  /creatures/1  => Creature.destroy()
+
+  The `Director` router will now dispatch all RESTFul urls for the Creature resource
+
+### Non-strict Mappings
+
+  Since not all HTTP clients support PUT and DELETE verbs ( such as forms in web browsers ),
+  restful map also map the following browser friendly routes:
+
+  If you prefer to not use this option, set { strict: true }
+
+    POST  /creatures/1/update  => Creature.update()
+    POST  /creatures/1/destroy => Creature.destroy()
+
+ You might also want to consider using a rails-like approach which uses
+ the convention of a reserved <form> input field called "_method" which
+ contains either "PUT" or "DELETE"
+
+   see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js
+
+### Exposing Arbitrary Resourceful Methods
+
+In many cases, you'll want to expose additional `Resourceful` methods through your router outside of the included: `create`, `all`, `show`, `update`, `destroy`.
+
+Restful has built in support for easily exposing arbitrary resource methods as `Director` routes.
+
+Simply create a new method on the `Resource`.
+
+    Creature.feed = function (_id, options, callback) {
+      callback(null, 'I have been fed');
+    }
+
+Then, set it to remote to let `restful` it's safe to expose this method to the world.
+
+    Creature.feed.remote = true
+
+It's easy as that! Now, you will have the following mappings in your `Director` router.
+
+    POST    /creatures/1/feed    => Creature.feed()
+    GET     /creatures/1/feed    => Creature.feed()
+
 # Usage
 
 ``` js
@@ -44,29 +96,6 @@ Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) 
       req.chunks.push(chunk.toString());
     });
 
-    // 
-    //  Router will now dispatch all RESTFul urls for the Creature resource
-    // 
-    //    POST    /creatures    => Creature.create()
-    //    GET     /creatures    => Creature.all()
-    //    GET     /creatures/1  => Creature.show()
-    //    PUT     /creatures/1  => Creature.update()
-    //    DELETE  /creatures/1  => Creature.destroy()
-    // 
-    //  Since not all HTTP clients support PUT and DELETE verbs ( such as forms in web browsers ),
-    //  restful will also map the following browser friendly routes:
-    // 
-    //  If you prefer to not use this option, set { strict: true }
-    // 
-    //    POST  /creatures/1/update  => Creature.update()
-    //    POST  /creatures/1/destroy => Creature.destroy()
-    // 
-    // You might also want to consider using a rails-like approach which uses
-    // the convention of a reserved <form> input field called "_method" which 
-    // contains either "PUT" or "DELETE"
-    // 
-    //   see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js
-    // 
     router.dispatch(req, res, function (err) {
       if (err) {
         res.writeHead(404);
@@ -75,9 +104,10 @@ Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) 
       console.log('Served ' + req.url);
     });
   });
-
+  console.log('server started on port 8000 - try visiting http://localhost:8000/explore')
   server.listen(8000);
 ```
+
 
 # Tests
 
