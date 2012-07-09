@@ -45,7 +45,7 @@ suite.use('localhost', 8001)
     .get('/users/1')
       .expect(404)
   .next()
-    .post('/users', { email: "marak.squires@gmail.com" })
+    .post('/users/1', { email: "marak.squires@gmail.com" })
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);
@@ -65,7 +65,7 @@ suite.use('localhost', 8001)
         assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
   .next()
-    .post('/users', { email: "marak.squires@gmail.com" })
+    .post('/users/2', { email: "marak.squires@gmail.com" })
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);

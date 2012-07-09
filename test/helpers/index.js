@@ -165,17 +165,16 @@ helpers.resourceTest = function (name, _id, context) {
     .next()
       .post('/creatures/' + _id, {})
         .expect(201)
-        .expect("should have correct _id", function (err, res, body) {
+        .expect("should have correct id", function (err, res, body) {
           var result = JSON.parse(body).creature;
           //
           // We only need to compare the returned _id if we actually specified an _id on creation
           //
           if (_id) {
-            assert.equal(result._id, _id);
+            assert.equal(result.id, _id);
           } else {
-            assert(result._id.length > 0, true);
+            assert(result.id.length > 0, true);
           }
-          
           // TODO Remark: If we had a context.before, we would set _id scope for path here
           //
           // Assign _id returned from endpoint as _id for the rest of the test

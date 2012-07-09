@@ -32,7 +32,7 @@ suite.use('localhost', 8003)
         var result = JSON.parse(body);
         assert.isObject(result.song)
         assert.equal(result.song.resource, 'Song');
-        assert.equal(result.song._id, 'random-no-album-track');
+        assert.equal(result.song.id, 'random-no-album-track');
         assert.isNull(result.song.album_id);
       })
   .next()
@@ -54,6 +54,11 @@ suite.use('localhost', 8003)
   .next()
     .post('/albums/ill-communication/songs/root-down')
       .expect(201)
+      .expect('should return correct song', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.isObject(result.song)
+         assert.equal(result.song.resource, 'Song');
+      })
   .next()
     .get('/albums/ill-communication/songs/root-down')
       .expect(200)
@@ -75,8 +80,8 @@ suite.use('localhost', 8003)
          var result = JSON.parse(body);
          assert.isObject(result.album)
          assert.isArray(result.album.song_ids)
-         assert.equal(result.album.song_ids[0], 'song/album/ill-communication/root-down')
-         assert.equal(result.album.song_ids[1], 'song/album/ill-communication/sabotage')
+         assert.equal(result.album.song_ids[0], 'root-down')
+         assert.equal(result.album.song_ids[1], 'sabotage')
       })
   .next()
     .put('/albums/ill-communication/songs/sabotage', { "description": "uses real instruments played by beastie boys"})
