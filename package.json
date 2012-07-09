@@ -6,7 +6,7 @@
     { "name": "Marak Squires", "email": "marak@nodejitsu.com" },
     { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" }
   ],
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "./lib/restful",
   "peerDependencies": {
     "director": "1.0.x",
@@ -24,7 +24,7 @@
   },
   "optionalDependencies": {},
   "engines": {
-    "node": "0.6.x"
+    "node": "0.6.x || 0.8.x"
   },
   "scripts": {
     "test": "vows --spec --isolate",
