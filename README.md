@@ -119,7 +119,7 @@ It's easy as that! By setting the `feed` method to remote, the following routes 
 
 There are several ways to provide security and authorization for accessing resource methods exposed with restful. The recommended pattern for authorization is to use resourceful's ability for `before` and `after` hooks. In these hooks, you can add additional business logic to restrict access to the resource's methods. 
 
-It is **not** recommended to place authorization logic in the routing layer, as in an ideal world the router will be a reflected interface of your resource. In theory, the security of the router is somewhat irrelevant since the resource could have multiple reflected interfaces that all required the same business logic. 
+It is **not** recommended to place authorization logic in the routing layer, as in an ideal world the router will be a reflected interface of the resource. In theory, the security of the router is somewhat irrelevant since the resource could have multiple reflected interfaces that all required the same business logic. 
 
 **TL;DR; For security and authorization, you should use resourceful's `before` and `after` hooks.**
 
