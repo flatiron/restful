@@ -16,57 +16,23 @@ The restful project removes the process of writing boilerplate routing code for 
 
 ## As a Flatiron Plugin
 
-```js
-TODO
-```
+To use restful as a <a href="http://github.com/flatiron/flatiron">Flatiron</a> plugin you will have to:
 
-## As a stand-alone app
+ - Define a resource in your Flatiron app
+ - Include the `restful` plugin in your Flatiron app
+ - Set the resource as `restful` in order to tell Flatiron to expose it
 
-``` js
-  var http        = require('http'),
-      restful     = require('../lib/restful'),
-      resourceful = require('resourceful');
+Here is a code example of using restful as a Flatiron plugin: <a href="https://github.com/flatiron/restful/blob/master/examples/app.js">https://github.com/flatiron/restful/blob/master/examples/app.js</a>
 
-  //
-  // Create a new Creature resource using the Resourceful library
-  //
-  var Creature = resourceful.define('creature', function () {
-    //
-    // Specify a storage engine
-    //
-    this.use('memory');
-    //
-    // Specify some properties with validation
-    //
-    this.string('type');
-    this.string('description');
-  });
+## As a stand-alone server
 
-  //
-  // Create a new Director routing map based on "Creature" resource
-  //
-  var router = restful.createRouter(Creature);
+To use restful as a stand-alone server you will have to:
 
-  //
-  // Setup a very simple HTTP server to serve our routing map!
-  //
-  var server = http.createServer(function (req, res) {
-    req.chunks = [];
-    req.on('data', function (chunk) {
-      req.chunks.push(chunk.toString());
-    });
+ - Define resourceful resource(s)
+ - Create a new restful router based on the resource(s)
+ - Use the newly created router inside an http server
 
-    router.dispatch(req, res, function (err) {
-      if (err) {
-        res.writeHead(404);
-        res.end();
-      }
-      console.log('Served ' + req.url);
-    });
-  });
-  console.log('server started on port 8000 - try visiting http://localhost:8000/explore')
-  server.listen(8000);
-```
+Here is a code example of using restful as a Flatiron plugin: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/app.js</a>
 
 ## Core HTTP REST Mappings
 
@@ -87,11 +53,18 @@ TODO
 
 ## Non-strict Mappings
 
-You'll notice that some of the routes defined above are not 100% restful ( suc as `/creatures/1/update` ). 
+You'll notice that some of the routes defined above are not 100% restful ( such as `/creatures/1/update` ). 
 
 Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web browsers ), restful maps additional "non-strict" rest mappings to make your life slightly easier.
 
 *If you prefer to not use this option, set `{ strict: true }`. You might also want to consider using a rails-like approach which uses the convention of a reserved `<form>` input field called "_method" which contains either "PUT" or "DELETE" see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js*
+
+## Built-in HTML REST API Explorer
+
+restful comes built in with a built-in HTML API explorer. If you wish to view the current routing map for the router as HTML, simply start the restful server and visit `http://localhost:8000/` in your browser.
+
+**Note:** The API explorer is powered by <a href="https://github.com/flatiron/director-explorer">director-explorer</a>, which will work for ANY <a href="https://github.com/flatiron/director">director</a> router.
+
 
 <a name"remote"></a>
 ## Exposing Arbitrary Resource Methods
