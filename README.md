@@ -68,24 +68,28 @@ TODO
   server.listen(8000);
 ```
 
-## Core Mappings
+## Core HTTP REST Mappings
 
   By default, `restful` will map the following `Resourceful` methods.
 
-    POST    /creatures    => Creature.create()
-    GET     /creatures    => Creature.all()
-    GET     /creatures/1  => Creature.show()
-    PUT     /creatures/1  => Creature.update()
-    DELETE  /creatures/1  => Creature.destroy()
+    Verb    Path                    Action                 Notes
+
+    GET     /creatures           => Creature.all()
+    POST    /creatures           => Creature.create()      Create with no-id, id is auto-generated
+    POST    /creatures/1         => Creature.create()      Create with id "1"
+    GET     /creatures/1         => Creature.show()
+    PUT     /creatures/1         => Creature.update()
+    DELETE  /creatures/1         => Creature.destroy()
+    POST    /creatures/1/update  => Creature.update()
+    POST    /creatures/1/destroy => Creature.destroy()
 
   The `Director` router will dispatch all incoming RESTFul urls to the Creature resource and respond back with the appropriate result.
 
 ## Non-strict Mappings
 
-Since not all HTTP clients support PUT and DELETE verbs ( such as forms in web browsers ),
-restful will also map the following browser friendly routes:
-    POST  /creatures/1/update  => Creature.update()
-    POST  /creatures/1/destroy => Creature.destroy()
+You'll notice that some of the routes defined above are not 100% restful ( suc as `/creatures/1/update` ). 
+
+Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web browsers ), restful maps additional "non-strict" rest mappings to make your life slightly easier.
 
 *If you prefer to not use this option, set `{ strict: true }`. You might also want to consider using a rails-like approach which uses the convention of a reserved `<form>` input field called "_method" which contains either "PUT" or "DELETE" see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js*
 
@@ -94,7 +98,7 @@ restful will also map the following browser friendly routes:
 
 In many cases, you'll want to expose additional methods on a Resource through the router outside of the included CRUD operations: `create`, `all`, `show`, `update`, `destroy`.
 
-Restful has built in support for easily exposing arbitrary remote resource methods as `Director` routes.
+Restful has built in support for easily exposing arbitrary remote resource methods.
 
 Consider the example of a `Creature`. We've already defined all the restful CRUD routes, but a Creature also needs to eat! Simply create a new method on the `Creature` resource called `feed`.
 
@@ -119,7 +123,7 @@ It's easy as that! By setting the `feed` method to remote, the following routes 
 
 There are several ways to provide security and authorization for accessing resource methods exposed with restful. The recommended pattern for authorization is to use resourceful's ability for `before` and `after` hooks. In these hooks, you can add additional business logic to restrict access to the resource's methods. 
 
-It is **not** recommended to place authorization logic in the routing layer, as in an ideal world the router will be a reflected interface of the resource. In theory, the security of the router is somewhat irrelevant since the resource could have multiple reflected interfaces that all required the same business logic. 
+It is **not** recommended to place authorization logic in the routing layer, as in an ideal world the router will be a reflected interface of the resource. In theory, the security of the router itself should be somewhat irrelevant since the resource could have multiple reflected interfaces that all required the same business logic.
 
 **TL;DR; For security and authorization, you should use resourceful's `before` and `after` hooks.**
 
