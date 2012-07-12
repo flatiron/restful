@@ -1,34 +1,25 @@
 /*
- * app.js: Test fixtures for http-users tests
+ * app.js
  *
  * (C) 2012, Nodejitsu Inc.
  *
  */
  
-var flatiron = require('flatiron'),
+var flatiron    = require('flatiron'),
+    helpers     = require('../test/helpers'),
     restful     = require('../lib/restful'),
     resourceful = require('resourceful');
 
 var app = module.exports = flatiron.app;
 
-app.resources = app.resources || {};
+app.resources = {};
 
-//
-// Create a new Creature resource using the Resourceful library
-//
-app.resources.Creature = resourceful.define('creature', function () {
-  this.restful = true;
-  
-  //
-  // Specify a storage engine
-  //
-  this.use('memory');
-  //
-  // Specify some properties with validation
-  //
-  this.string('type');
-  this.string('description');
-});
+app.resources.Creature = helpers.Creature;
+/*
+  Creature: helpers.Creature,
+  Album: helpers.Album
+}*/
+
 
 app.use(flatiron.plugins.http, {
   headers: {
@@ -40,41 +31,6 @@ app.use(flatiron.plugins.http, {
 // This will expose all resources as restful routers
 //
 app.use(restful);
-
-app.router.get('/', function () {
-  this.res.text(niceTable(app.router.routes));
-  this.res.end();
-})
-
-var traverse = require('traverse');
-
-
-//
-// TODO: Move this to director core?
-//
-function niceTable (routes) {
-  var niceRoutes = routes,
-      verbs = ['get', 'post', 'put', 'delete'],
-      str = '';
-
-  traverse(niceRoutes).forEach(visitor);
-
-  function visitor () {
-    var path = this.path, 
-    pad = '';
-    if (path[path.length - 1] && verbs.indexOf(path[path.length - 1]) !== -1) {
-      pad += path.pop().toUpperCase();
-      for (var i = pad.length; i < 8; i++) {
-        pad += ' ';
-      }
-      
-      path = path.join('/');
-      str += pad + '/' + path  + ' \n'
-    }
-  }
-  
-  return str;
-}
 
 //
 // Expose the common part of flatiron
@@ -100,4 +56,7 @@ app.on('init', function () {
   resourceful.autoMigrate = true;
 });
 
-app.start(8080);
+app.start(8000);
+
+console.log(' > http server started on port 8000');
+console.log(' > visit: http://localhost:8000/ ');
