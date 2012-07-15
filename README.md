@@ -61,7 +61,7 @@ Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web b
 
 ## Built-in HTML REST API Explorer
 
-restful comes built in with a built-in HTML API explorer. If you wish to view the current routing map for the router as HTML, simply start the restful server and visit `http://localhost:8000/` in your browser.
+restful comes built in with a built-in HTML API explorer. If you wish to view the current routing map for the router as HTML, simply start the restful server and visit `http://localhost:8000/` in your browser. If you prefer to not use this option, set `{ explore: false }`.
 
 **Note:** The API explorer is powered by <a href="https://github.com/flatiron/director-explorer">director-explorer</a>, which will work for ANY <a href="https://github.com/flatiron/director">director</a> router.
 
