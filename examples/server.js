@@ -6,15 +6,14 @@
  */
  
 var http        = require('http'),
-    helpers     = require('../test/helpers'),
+    fixtures    = require('../test/fixtures'),
     restful     = require('../lib/restful'),
     resourceful = require('resourceful');
 
 //
 // Create a new Director routing map based on defined resources
 //
-//var router = restful.createRouter([helpers.Creature, helpers.Album]);
-var router = restful.createRouter(helpers.Creature);
+var router = restful.createRouter([fixtures.Creature, fixtures.Album]);
 
 //
 // Setup a very simple HTTP server to serve our routing map!
@@ -32,6 +31,8 @@ var server = http.createServer(function (req, res) {
     console.log('Served ' + req.url);
   });
 });
+
+console.log(router.routes);
 
 server.listen(8000);
 
