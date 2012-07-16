@@ -11,19 +11,20 @@ var vows = require('vows'),
     restful = require('../lib/restful'),
     resourceful = require('resourceful'),
     http = require('http'),
-    helpers = require('./helpers');
+    fixtures = require('./fixtures'),
+    macros = require('./macros');
 
 var suite = APIeasy.describe('restful/restful-api-test');
 
-helpers.createServer(helpers.Creature, { strict: true }).listen(8000);
+macros.createServer(fixtures.Creature, { strict: true }).listen(8000);
 
 suite.use('localhost', 8000)
   .setHeader('Content-Type', 'application/json')
   .followRedirect(false)
     .next()
-      helpers.resourceTest('Creature', null, suite)
+      macros.resourceTest('Creature', null, suite)
     .next()
-      helpers.resourceTest('Creature', '2', suite)
+      macros.resourceTest('Creature', '2', suite)
     .next()
-      helpers.resourceTest('Creature', 'bob', suite)
+      macros.resourceTest('Creature', 'bob', suite)
 .export(module);

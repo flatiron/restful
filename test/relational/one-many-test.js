@@ -8,11 +8,12 @@
 var vows = require('vows'),
     assert = require('assert'),
     APIeasy = require('api-easy'),
-    helpers = require('../helpers');
+    fixtures = require('../fixtures'),
+    macros = require('../macros');
 
 var suite = APIeasy.describe('restful/relational/one-many');
 
-helpers.createServer(helpers.Album, { strict: false }).listen(8003);
+macros.createServer(fixtures.Album, { strict: false }).listen(8003);
 
 suite.use('localhost', 8003)
   .setHeader('Content-Type', 'application/json')

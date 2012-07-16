@@ -8,58 +8,16 @@
 var vows = require('vows'),
     assert = require('assert'),
     APIeasy = require('api-easy'),
-    helpers = require('./helpers');
+    fixtures = require('./fixtures'),
+    macros = require('./macros');
 
 var suite = APIeasy.describe('restful/non-strict-api-test');
 
-helpers.createServer(helpers.Creature, { strict: false }).listen(8001);
+macros.createServer(fixtures.Creature, { strict: false }).listen(8001);
 
 suite.use('localhost', 8001)
   .setHeader('Content-Type', 'application/json')
   .followRedirect(false)
-    .get('/creatures')
-      .expect(200)
   .next()
-    .post('/creatures/new', { id: 1 })
-      .expect(201)
-  .next()
-    .get('/creatures/1')
-      .expect(200)
-  .next()
-    .post('/creatures/1/update', { 'type' : 'dragon' })
-      .expect(204)
-  .next()
-    .post('/creatures/1/destroy')
-      .expect(204)
-  .next()
-    .get('/creatures/1')
-      .expect(404)
-  .next()
-    .post('/creatures/new', { id: "bob" })
-      .expect(201)
-  .next()
-    .get('/creatures/bob')
-      .expect(200)
-  .next()
-    .post('/creatures', { id: 2, 'type': 'Dragon' })
-      .expect(201)
-  /* Remark: Tests for testing _id updates of resources
-  .next()
-    .post('/creatures/bob/update', { '_id' : 'what-about-bob' })
-      .expect(204)
-  .next()
-    .get('/creatures/bob')
-      .expect(404)
-  .next()
-    .get('/creatures/what-about-bob')
-      .expect(200)
-  */
-  .next()
-    .get('/creatures/2')
-      .expect(200)
-      .expect('should have correct type', function (err, res, body) {
-         var result = JSON.parse(body);
-         assert.isObject(result.creature)
-         assert.equal(result.creature.type, 'Dragon');
-      })
+    macros.nonStrictResourceTest(suite)
 .export(module);
