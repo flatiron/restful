@@ -32,7 +32,7 @@ To use restful as a stand-alone server you will have to:
  - Create a new restful router based on the resource(s)
  - Use the newly created router inside an http server
 
-Here is a code example of using restful as a Flatiron plugin: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/app.js</a>
+Here is a code example of using restful as a stand-alone server: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
 
 ## Core HTTP REST Mappings
 
@@ -59,7 +59,19 @@ Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web b
 
 *If you prefer to not use this option, set `{ strict: true }`. You might also want to consider using a rails-like approach which uses the convention of a reserved `<form>` input field called "_method" which contains either "PUT" or "DELETE" see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js*
 
-## Built-in HTML REST API Explorer
+## Relational Resources
+
+restful fully supports relational data. First, you will have to define the relationship in the resource(s) itself using the resourceful `Resource.parent()` API.
+
+Once you have established the relationship in your resourceful resources, simply expose the most parent resource(s) and all child relationships will be imported.
+
+Here is a simple code example of using restful with : `Albums` and `Songs`: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
+
+restful will properly reflect the relational properties of your resources into the routing layer. 
+
+**Protip:** You'll want to browse the restful server using the HTML API explorer in order to see which routes will be created.
+
+## Built-in HTML API Explorer
 
 restful comes built in with a built-in HTML API explorer. If you wish to view the current routing map for the router as HTML, simply start the restful server and visit `http://localhost:8000/` in your browser. If you prefer to not use this option, set `{ explore: false }`.
 
