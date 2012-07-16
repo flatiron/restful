@@ -33,6 +33,9 @@ macros.resourceTest = function (name, _id, context) {
   }
 
   return context
+    .get('/creatures/new')
+      .expect(404)
+    .next()
     .get('/creatures')
       .expect(200)
     .next()
