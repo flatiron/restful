@@ -41,11 +41,7 @@ To use restful as a HTTP `req` `res` processing middleware you will have to:
   - Create a new router based on the resource(s) using `restful.createRouter`
   - Use the newly created router inside an existing HTTP server
 
-Here is a code example of using restful as in a custom server: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
-
-Here is a code example of using restful as a server: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
-
-
+Here is a code example of using restful in a server: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
 
 ## Core HTTP REST Mappings
 
