@@ -6,16 +6,16 @@
     { "name": "Marak Squires", "email": "marak@nodejitsu.com" },
     { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" }
   ],
-  "version": "0.1.3",
+  "version": "0.2.1",
   "main": "./lib/restful",
   "peerDependencies": {
     "director": "1.0.x",
-    "resourceful": "0.1.x"
+    "resourceful": "0.2.x"
   },
   "dependencies": {
     "director": "1.0.x",
     "director-explorer": "*",
-    "resourceful": "0.1.x",
+    "resourceful": "0.2.x",
     "utile": "0.1.x"
   },
   "devDependencies": {
@@ -24,7 +24,7 @@
   },
   "optionalDependencies": {},
   "engines": {
-    "node": "0.6.x"
+    "node": "0.6.x || 0.8.x"
   },
   "scripts": {
     "test": "vows --spec --isolate",
