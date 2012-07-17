@@ -19,8 +19,8 @@ The restful project removes the process of writing boilerplate routing code for 
 To use restful as a <a href="http://github.com/flatiron/flatiron">Flatiron</a> plugin you will have to:
 
  - Define resource(s) in your Flatiron app
- - Include the `restful` plugin in your Flatiron app
- - Set the resource as `restful` in order to tell Flatiron to expose it
+ - Use the restful plugin in your Flatiron app
+ - Set `restful=true` on the resource to let Flatiron know to expose it
 
 Here is a code example of using restful as a Flatiron plugin: <a href="https://github.com/flatiron/restful/blob/master/examples/app.js">https://github.com/flatiron/restful/blob/master/examples/app.js</a>
 
