@@ -6,14 +6,14 @@
  */
  
 var flatiron    = require('flatiron'),
-    helpers     = require('../test/helpers'),
+    fixtures    = require('../test/fixtures'),
     restful     = require('../lib/restful'),
     resourceful = require('resourceful');
 
 var app = module.exports = flatiron.app;
 app.resources = {};
-app.resources.Creature = helpers.Creature;
-app.resources.Album = helpers.Album;
+app.resources.Creature = fixtures.Creature;
+app.resources.Album = fixtures.Album;
 
 app.use(flatiron.plugins.http, {
   headers: {
