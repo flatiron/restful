@@ -18,7 +18,7 @@ The restful project removes the process of writing boilerplate routing code for 
 
 To use restful as a <a href="http://github.com/flatiron/flatiron">Flatiron</a> plugin you will have to:
 
- - Define a resource in your Flatiron app
+ - Define resource(s) in your Flatiron app
  - Include the `restful` plugin in your Flatiron app
  - Set the resource as `restful` in order to tell Flatiron to expose it
 
@@ -28,11 +28,24 @@ Here is a code example of using restful as a Flatiron plugin: <a href="https://g
 
 To use restful as a stand-alone server you will have to:
 
- - Define resourceful resource(s)
- - Create a new restful router based on the resource(s)
- - Use the newly created router inside an http server
+ - Define resource(s)
+ - Create a new server based on the resource(s) using `restful.createServer`
 
-Here is a code example of using restful as a stand-alone server: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
+Here is a code example of using restful as a stand-alone server: <a href="https://github.com/flatiron/restful/blob/master/examples/standalone-server.js">https://github.com/flatiron/restful/blob/master/examples/standalone-server.js</a>
+
+## As a middleware / custom router
+
+To use restful as a HTTP `req` `res` processing middleware you will have to:
+
+  - Define resource(s)
+  - Create a new router based on the resource(s) using `restful.createRouter`
+  - Use the newly created router inside an existing HTTP server
+
+Here is a code example of using restful as in a custom server: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
+
+Here is a code example of using restful as a server: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
+
+
 
 ## Core HTTP REST Mappings
 
@@ -57,7 +70,9 @@ You'll notice that some of the routes defined above are not 100% restful ( such 
 
 Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web browsers ), restful maps additional "non-strict" rest mappings to make your life slightly easier.
 
-*If you prefer to not use this option, set `{ strict: true }`. You might also want to consider using a rails-like approach which uses the convention of a reserved `<form>` input field called "_method" which contains either "PUT" or "DELETE" see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js*
+If you prefer to not use this option, set `{ strict: true }`.
+
+*You might also want to consider using a rails-like approach which uses the convention of a reserved `<form>` input field called "_method" which contains either "PUT" or "DELETE" see: https://github.com/senchalabs/connect/blob/master/lib/middleware/methodOverride.js*
 
 ## Relational Resources
 
@@ -75,7 +90,9 @@ Here is a simple code example of using restful with `Albums` and `Songs`: <a hre
 
 ## Built-in HTML API Explorer
 
-restful comes built in with a built-in HTML API explorer. If you wish to view the current routing map for the router as HTML, simply start the restful server and visit `http://localhost:8000/` in your browser. If you prefer to not use this option, set `{ explore: false }`.
+restful comes with a built-in HTML API explorer. If you wish to view the current routing map for the router as HTML, simply start the restful server and visit `http://localhost:8000/` in your browser. 
+
+If you prefer to not use this option, set `{ explore: false }`.
 
 **Note:** The API explorer is powered by <a href="https://github.com/flatiron/director-explorer">director-explorer</a>, which will work for ANY <a href="https://github.com/flatiron/director">director</a> router.
 

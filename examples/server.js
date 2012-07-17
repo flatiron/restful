@@ -1,5 +1,5 @@
 /*
- * standalone-server.js: Simple standalone `restful` server.
+ * server.js: Simple http server with `restful` router
  *
  * (C) 2012, Nodejitsu Inc.
  *
@@ -35,4 +35,3 @@ var server = http.createServer(function (req, res) {
 server.listen(8000);
 
 console.log(' > http server started on port 8000');
-console.log('visit: http://localhost:8000/ ');
