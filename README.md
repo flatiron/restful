@@ -53,7 +53,7 @@ Here is a code example of using restful as a stand-alone server: <a href="https:
 
 ## Non-strict Mappings
 
-You'll notice that some of the routes defined above are not 100% restful ( such as `/creatures/1/update` ). 
+You'll notice that some of the routes defined above are not 100% restful ( such as `POST /creatures/1/update` ). 
 
 Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web browsers ), restful maps additional "non-strict" rest mappings to make your life slightly easier.
 
@@ -63,7 +63,7 @@ Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web b
 
 To define relational data in restful you will have to:
 
- - Define the relationship in the resource itself using the resourceful `Resource.parent()` API.
+ - Define the relationship in the resource itself using the resourceful `Resource.parent()` API
  - Create a new router based on the resource(s)
 
 restful will then properly reflect the relational properties of your resources into the routing layer.
