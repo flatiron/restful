@@ -15,7 +15,7 @@
   "dependencies": {
     "director": "1.0.x",
     "director-explorer": "*",
-    "resourceful": "0.2.x",
+    "resourceful": "0.3.x",
     "utile": "0.1.x"
   },
   "devDependencies": {
