@@ -61,13 +61,15 @@ Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web b
 
 ## Relational Resources
 
-restful fully supports relational data. First, you will have to define the relationship in the resource(s) itself using the resourceful `Resource.parent()` API.
+To define relational data in restful you will have to:
 
-Once you have established the relationship in your resourceful resources, simply expose the most parent resource(s) and all child relationships will be imported.
+ - Define the relationship in the resource itself using the resourceful `Resource.parent()` API.
+ - Create a new router based on the resource(s)
 
-Here is a simple code example of using restful with : `Albums` and `Songs`: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
+restful will then properly reflect the relational properties of your resources into the routing layer.
 
-restful will properly reflect the relational properties of your resources into the routing layer. 
+Here is a simple code example of using restful with `Albums` and `Songs`: <a href="https://github.com/flatiron/restful/blob/master/examples/server.js">https://github.com/flatiron/restful/blob/master/examples/server.js</a>
+
 
 **Protip:** You'll want to browse the restful server using the HTML API explorer in order to see which routes will be created.
 
@@ -83,9 +85,11 @@ restful comes built in with a built-in HTML API explorer. If you wish to view th
 
 In many cases, you'll want to expose additional methods on a Resource through the router outside of the included CRUD operations: `create`, `all`, `show`, `update`, `destroy`.
 
-Restful has built in support for easily exposing arbitrary remote resource methods.
+restful has built in support for easily exposing arbitrary remote resource methods.
 
-Consider the example of a `Creature`. We've already defined all the restful CRUD routes, but a Creature also needs to eat! Simply create a new method on the `Creature` resource called `feed`.
+Consider the example of a `Creature`. We've already defined all the restful CRUD routes, but a Creature also needs to eat! 
+
+Simply create a new method on the `Creature` resource called `feed`.
 
 ```js
 Creature.feed = function (_id, options, callback) {
