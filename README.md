@@ -6,7 +6,9 @@ Creates [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) 
 
 # Explanation
 
-The restful project removes the process of writing boilerplate routing code for interacting with  [resourceful](http://github.com/flatiron/resourceful) resources. Restful uses <a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)">reflection</a> to reflect an http router interface which maps all the restful routes needed to perform basic [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations with [resourceful](http://github.com/flatiron/resourceful). restful also has the ability to expose additional arbitrary <a href="#remote">remote resource methods</a> through it's http router interface. Through the removal of this boilerplate code, restful creates a robust, standardized, and re-usable http interface for any [resourceful](http://github.com/flatiron/resourceful) resource.
+The restful project removes the process of writing boilerplate routing code for interacting with  [resourceful](http://github.com/flatiron/resourceful) resources. Restful uses <a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)">reflection</a> to reflect an http router interface which maps all the restful routes needed to perform basic [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations with [resourceful](http://github.com/flatiron/resourceful). restful also has the ability to expose additional arbitrary <a href="#remote">remote resource methods</a> in it's http router interface. 
+
+Through the removal of this boilerplate code, restful creates a robust, standardized, and re-usable http interface for any [resourceful](http://github.com/flatiron/resourceful) resource.
 
 # Installation
 
