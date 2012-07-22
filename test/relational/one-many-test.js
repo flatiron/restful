@@ -28,21 +28,40 @@ suite.use('localhost', 8003)
       .expect(201)
   .next()
     .post('/songs/random-no-album-track')
+      .expect(500)
+  .next()
+    .post('/songs/get-it-together', { album_id: 'ill-communication' })
       .expect(201)
-      .expect('should respond with created song', function (err, res, body) {
-        var result = JSON.parse(body);
-        assert.isObject(result.song)
-        assert.equal(result.song.resource, 'Song');
-        assert.equal(result.song.id, 'random-no-album-track');
-        assert.isNull(result.song.album_id);
+  .next()
+    .get('/songs/get-it-together')
+      .expect(404)
+  .next()
+    .post('/songs', { id: "sure-shot" })
+      .expect(500)
+  .next()
+    .post('/songs', {  id: "sure-shot", album_id: 'ill-communication' })
+      .expect(201)
+  .next()
+    .get('/songs/sure-shot')
+      .expect(404)
+  .next()
+    .get('/albums/ill-communication')
+      .expect(200)
+      .expect('should return correct album with new songs', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.isArray(result.album.song_ids);
+         console.log(result);
+         assert.equal(result.album.song_ids.length, 2);
+
       })
   .next()
-    .get('/songs/random-no-album-track')
+    .get('/albums/ill-communication/songs/get-it-together')
       .expect(200)
-      .expect('should respond with correct song', function (err, res, body) {
+      .expect('should return correct song', function (err, res, body) {
          var result = JSON.parse(body);
+         console.log(result)
          assert.isObject(result.song)
-         assert.equal(result.song.resource, 'Song');  
+         assert.equal(result.song.album_id, 'ill-communication');
       })
   .next()
     .get('/albums/ill-communication')
@@ -81,8 +100,12 @@ suite.use('localhost', 8003)
          var result = JSON.parse(body);
          assert.isObject(result.album)
          assert.isArray(result.album.song_ids)
-         assert.equal(result.album.song_ids[0], 'root-down')
-         assert.equal(result.album.song_ids[1], 'sabotage')
+         assert.equal(result.album.song_ids.length, 4);
+         assert.equal(result.album.song_ids[0], 'get-it-together');
+         assert.equal(result.album.song_ids[1], 'sure-shot');
+         assert.equal(result.album.song_ids[2], 'root-down');
+         assert.equal(result.album.song_ids[3], 'sabotage')
+
       })
   .next()
     .put('/albums/ill-communication/songs/sabotage', { "description": "uses real instruments played by beastie boys"})
