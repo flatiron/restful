@@ -41,25 +41,33 @@ suite.use('localhost', 8003)
   .next()
     .post('/songs', {  id: "sure-shot", album_id: 'ill-communication' })
       .expect(201)
+      .expect('should return correct song', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.isObject(result.song);
+         //
+         // TODO: Shouldn't this be song.key, 'sure-shot' ??
+         //
+         assert.equal(result.song.id, 'album/ill-communication/sure-shot');
+      })
   .next()
     .get('/songs/sure-shot')
       .expect(404)
+  .next()
+    .get('/albums/ill-communication/songs/sure-shot')
+      .expect(200)
   .next()
     .get('/albums/ill-communication')
       .expect(200)
       .expect('should return correct album with new songs', function (err, res, body) {
          var result = JSON.parse(body);
          assert.isArray(result.album.song_ids);
-         console.log(result);
          assert.equal(result.album.song_ids.length, 2);
-
       })
   .next()
     .get('/albums/ill-communication/songs/get-it-together')
       .expect(200)
       .expect('should return correct song', function (err, res, body) {
          var result = JSON.parse(body);
-         console.log(result)
          assert.isObject(result.song)
          assert.equal(result.song.album_id, 'ill-communication');
       })
