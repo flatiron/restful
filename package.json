@@ -9,11 +9,11 @@
   "version": "0.3.0",
   "main": "./lib/restful",
   "peerDependencies": {
-    "director": "1.0.x",
+    "director": "1.1.x",
     "resourceful": "0.3.x"
   },
   "dependencies": {
-    "director": "1.0.x",
+    "director": "1.1.x",
     "director-explorer": "*",
     "resourceful": "0.3.x",
     "utile": "0.1.x"
