@@ -16,14 +16,16 @@ var vows = require('vows'),
 
 var suite = APIeasy.describe('restful/restful-api-test');
 
-macros.createServer(fixtures.Creature, { strict: false, prefix: '/custom-prefix' }).listen(8002);
+macros.createServer([fixtures.Creature, fixtures.Album], { strict: false, prefix: '/custom-prefix' }).listen(8002);
 
 suite.use('localhost', 8002)
   .setHeader('Content-Type', 'application/json')
   .followRedirect(false)
     .next()
-      macros.resourceTest('Creature', { prefix: '/custom-prefix' }, suite)
+      macros.resourceTest('Creature', { _id: null, prefix: '/custom-prefix' }, suite)
     .next()
       macros.nonStrictResourceTest({ prefix: '/custom-prefix' }, suite)
+    .next()
+      macros.relationalResourceTest({ prefix: "/custom-prefix" }, suite)
 
 .export(module);
