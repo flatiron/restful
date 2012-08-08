@@ -19,5 +19,5 @@ suite.use('localhost', 8001)
   .setHeader('Content-Type', 'application/json')
   .followRedirect(false)
   .next()
-    macros.nonStrictResourceTest(suite)
+    macros.nonStrictResourceTest({}, suite)
 .export(module);

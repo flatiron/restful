@@ -1,5 +1,5 @@
 /*
- * restful-api-test.js: Tests for purely `restful` routes 
+ * options-prefix-test.js: Tests adding custom prefix to all routes
  *
  * (C) 2012, Nodejitsu Inc.
  *
@@ -16,17 +16,14 @@ var vows = require('vows'),
 
 var suite = APIeasy.describe('restful/restful-api-test');
 
-macros.createServer(fixtures.Creature, { strict: true }).listen(8000);
+macros.createServer(fixtures.Creature, { strict: false, prefix: '/custom-prefix' }).listen(8002);
 
-suite.use('localhost', 8000)
+suite.use('localhost', 8002)
   .setHeader('Content-Type', 'application/json')
   .followRedirect(false)
     .next()
-      macros.resourceTest('Creature', { _id: null }, suite)
+      macros.resourceTest('Creature', { prefix: '/custom-prefix' }, suite)
     .next()
-      macros.resourceTest('Creature', { _id: 2 }, suite)
-    .next()
-      macros.resourceTest('Creature', { _id: "bob" }, suite)
-    .next()
+      macros.nonStrictResourceTest({ prefix: '/custom-prefix' }, suite)
 
 .export(module);

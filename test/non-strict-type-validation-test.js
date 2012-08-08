@@ -20,5 +20,5 @@ suite.use('localhost', 8001)
   .setHeader('Content-Type', 'application/json')
   .followRedirect(false)
   .next()
-    macros.nonStrictTypeValidationTest(suite)
+    macros.nonStrictTypeValidationTest({}, suite)
 .export(module);

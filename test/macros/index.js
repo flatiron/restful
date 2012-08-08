@@ -22,8 +22,11 @@ macros.createServer = function (resource, options) {
   return server;
 }
 
-macros.resourceTest = function (name, _id, context) {
-  
+macros.resourceTest = function (name, options, context) {
+
+  var _id = options._id,
+      prefix = options.prefix || '';
+
   //
   // TODO: Remove this block of code, we should get back ID from created entities,
   //       and specify it for further test paths using context.before()
@@ -33,13 +36,13 @@ macros.resourceTest = function (name, _id, context) {
   }
 
   return context
-    .get('/creatures/new')
+    .get(prefix + '/creatures/new')
       .expect(404)
     .next()
-    .get('/creatures')
+    .get(prefix + '/creatures')
       .expect(200)
     .next()
-      .post('/creatures/' + _id, {})
+      .post(prefix + '/creatures/' + _id, {})
         .expect(201)
         .expect("should have correct id", function (err, res, body) {
           var result = JSON.parse(body).creature;
@@ -58,13 +61,13 @@ macros.resourceTest = function (name, _id, context) {
           // _id = result._id;
         })
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(200)
     .next()
-      .put('/creatures/' + _id, { 'type' : "Dragon" })
+      .put(prefix + '/creatures/' + _id, { 'type' : "Dragon" })
         .expect(204)
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -72,10 +75,10 @@ macros.resourceTest = function (name, _id, context) {
            assert.equal(result.creature.type, "Dragon");
         })
     .next()
-      .put('/creatures/' + _id, { 'type' : "Unicorn", "life": 10 })
+      .put(prefix + '/creatures/' + _id, { 'type' : "Unicorn", "life": 10 })
         .expect(204)
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -83,7 +86,7 @@ macros.resourceTest = function (name, _id, context) {
            assert.equal(result.creature.type, "Unicorn");
         })
     .next()
-      .get('/creatures/' + _id + '/feed')
+      .get(prefix + '/creatures/' + _id + '/feed')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -91,7 +94,7 @@ macros.resourceTest = function (name, _id, context) {
            assert.equal(result.result, "I have been fed my life is: 11");
         })
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -99,7 +102,7 @@ macros.resourceTest = function (name, _id, context) {
           assert.equal(result.creature.life, "11");
         })
     .next()
-      .post('/creatures/' + _id + '/feed')
+      .post(prefix + '/creatures/' + _id + '/feed')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -107,7 +110,7 @@ macros.resourceTest = function (name, _id, context) {
            assert.equal(result.result, "I have been fed my life is: 12");
         })
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -115,7 +118,7 @@ macros.resourceTest = function (name, _id, context) {
           assert.equal(result.creature.life, "12");
         })
     .next()
-      .get('/creatures/' + _id + '/hit')
+      .get(prefix + '/creatures/' + _id + '/hit')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -123,7 +126,7 @@ macros.resourceTest = function (name, _id, context) {
            assert.equal(result.result, "I have been hit my life is: 11");
         })
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -131,7 +134,7 @@ macros.resourceTest = function (name, _id, context) {
           assert.equal(result.creature.life, "11");
         })
     .next()
-      .post('/creatures/' + _id + '/hit')
+      .post(prefix + '/creatures/' + _id + '/hit')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -139,7 +142,7 @@ macros.resourceTest = function (name, _id, context) {
            assert.equal(result.result, "I have been hit my life is: 10");
         })
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -147,19 +150,19 @@ macros.resourceTest = function (name, _id, context) {
           assert.equal(result.creature.life, "10");
         })
     .next()
-      .get('/creatures/' + _id + '/_die')
+      .get(prefix + '/creatures/' + _id + '/_die')
         .expect(404)
     .next()
-      .post('/creatures/' + _id + '/_die')
+      .post(prefix + '/creatures/' + _id + '/_die')
         .expect(404)
 
 
     /* Remark: Tests for testing _id updates of resources
     .next()
-      .put('/creatures/' + _id, { 'type' : "Unicorn", "_id": "charlie" })
+      .put(prefix + '/creatures/' + _id, { 'type' : "Unicorn", "_id": "charlie" })
         .expect(204)
     .next()
-      .get('/creatures/charlie')
+      .get(prefix + '/creatures/charlie')
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -168,54 +171,57 @@ macros.resourceTest = function (name, _id, context) {
         })
      */
     .next()
-      .del('/creatures/' + _id)
+      .del(prefix + '/creatures/' + _id)
         .expect(204)
     .next()
-      .get('/creatures/' + _id)
+      .get(prefix + '/creatures/' + _id)
         .expect(404)
 };
 
-macros.nonStrictResourceTest = function (context) {
+macros.nonStrictResourceTest = function (options, context) {
+
+  var prefix = options.prefix || '';
+
   return context
-    .get('/creatures')
+    .get(prefix + '/creatures')
       .expect(200)
   .next()
-    .post('/creatures/new', { id: 1 })
+    .post(prefix + '/creatures/new', { id: 1 })
       .expect(201)
   .next()
-    .get('/creatures/1')
+    .get(prefix + '/creatures/1')
       .expect(200)
   .next()
-    .post('/creatures/1/update', { 'type' : 'dragon' })
+    .post(prefix + '/creatures/1/update', { 'type' : 'dragon' })
       .expect(204)
   .next()
-    .post('/creatures/1/destroy')
+    .post(prefix + '/creatures/1/destroy')
       .expect(204)
   .next()
-    .get('/creatures/1')
+    .get(prefix + '/creatures/1')
       .expect(404)
   .next()
-    .post('/creatures/new', { id: "bob" })
+    .post(prefix + '/creatures/new', { id: "bob" })
       .expect(201)
   .next()
-    .get('/creatures/bob')
+    .get(prefix + '/creatures/bob')
       .expect(200)
   .next()
-    .post('/creatures', { id: 2, 'type': 'Dragon' })
+    .post(prefix + '/creatures', { id: 2, 'type': 'Dragon' })
       .expect(201)
   /* Remark: Tests for testing _id updates of resources
   .next()
-    .post('/creatures/bob/update', { '_id' : 'what-about-bob' })
+    .post(prefix + '/creatures/bob/update', { '_id' : 'what-about-bob' })
       .expect(204)
   .next()
-    .get('/creatures/bob')
+    .get(prefix + '/creatures/bob')
       .expect(404)
   .next()
-    .get('/creatures/what-about-bob')
+    .get(prefix + '/creatures/what-about-bob')
       .expect(200)
   */
   .next()
-    .get('/creatures/2')
+    .get(prefix + '/creatures/2')
       .expect(200)
       .expect('should have correct type', function (err, res, body) {
          var result = JSON.parse(body);
@@ -312,7 +318,7 @@ macros.typeValidationTest = function (context) {
       .expect(201)
 };
 
-macros.nonStrictTypeValidationTest = function (context) {
+macros.nonStrictTypeValidationTest = function (options, context) {
   return context
   .get('/users')
     .expect(200)
