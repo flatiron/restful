@@ -21,7 +21,9 @@ app.use(flatiron.plugins.http, {
   }
 });
 app.use(restful);
-app.start(8000);
+app.start(8000, function(){
+  console.log(app.router.routes)
+  console.log(' > http server started on port 8000');
+  console.log(' > visit: http://localhost:8000/ ');
+});
 
-console.log(' > http server started on port 8000');
-console.log(' > visit: http://localhost:8000/ ');
