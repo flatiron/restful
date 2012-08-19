@@ -133,6 +133,34 @@ It is **not** recommended to place authorization logic in the routing layer, as 
 
 **TL;DR; For security and authorization, you should use resourceful's `before` and `after` hooks.**
 
+
+## Router Customization
+
+Restful provides access to a `Director.router` object. This router is created by the heavily used [Director](github.com/flatiron/director) library.
+
+If you need to override a generated route, or create an ad-hoc route, or make any customization, the API is *exactly* the same as the Director API.
+
+**customize a reflected router interface:**
+
+```js
+app.router.get('/', function(){
+  this.res.end('home page');
+});
+
+//
+// Overrides `/creature/larry` but won't override,
+// any other `/creature/:id` captures.
+//
+app.router.get('/creatures/larry', function(){
+  this.res.end('larry is special!');
+});
+
+```
+
+Like most of Flatiron's reflection libraries, [restful](http://github.com/flatiron/restful) is built to solve 90% of use-cases. If you hit a case where restful is causing a problem, you can simply drop into `Director`. 
+
+Reflection is *highly* encouraged, but most definitely **optional**.
+
 # Tests
 
      npm test
