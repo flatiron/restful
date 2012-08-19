@@ -16,7 +16,7 @@ var vows = require('vows'),
 
 var suite = APIeasy.describe('restful/flatiron-plugin-test');
 
-suite.use('localhost', 8003)
+suite.use('localhost', 8004)
   .setHeader('Content-Type', 'application/json')
   .followRedirect(false)
   .addBatch({
@@ -38,7 +38,7 @@ suite.use('localhost', 8003)
             }
           });
           app.use(restful, { prefix: "/custom-prefix" });
-          app.start(8003, this.callback)
+          app.start(8004, this.callback)
         },
         'should not error': function (err, router) {
           assert.isNull(err, router);
