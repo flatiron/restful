@@ -225,6 +225,40 @@ macros.nonStrictResourceTest = function (options, context) {
          assert.isObject(result.creature)
          assert.equal(result.creature.type, 'Dragon');
       })
+  .next()
+    .get(prefix + '/creatures/find')
+      .expect(200)
+      .expect('should return all creatures', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.isArray(result.creatures);
+      })
+  .next()
+    .post(prefix + '/creatures/find')
+      .expect(200)
+      .expect('should return all creatures', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.isArray(result.creatures);
+      })
+  .next()
+    .post(prefix + '/creatures/find', { 'type': 'Dragon'})
+      .expect(200)
+      .expect('should return only Dragons', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.isArray(result.creatures);
+         result.creatures.forEach(function(creature){
+           assert.equal(creature.type, 'Dragon');
+         });
+      })
+  .next()
+    .get(prefix + '/creatures/find?type=Dragon')
+      .expect(200)
+      .expect('should return only Dragons', function (err, res, body) {
+         var result = JSON.parse(body);
+         assert.isArray(result.creatures);
+         result.creatures.forEach(function(creature){
+           assert.equal(creature.type, 'Dragon');
+         });
+      })
 };
 
 macros.relationalResourceTest = function (options, context) {
