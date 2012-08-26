@@ -21,13 +21,11 @@ Through the removal of this boilerplate code, restful creates a robust, standard
 ## Define resource(s)
 
 ```js
-
 var resourceful = require('resourceful'),
     Creature    = resourceful.define('creature');
 
 Creature.property('type', String, { default: "dragon" });
 Creature.property('life', Number, { default: 10, min: 0, max: 20 });
-
 ```
 
 *[additional API documentation for defining resources](http://github.com/flatiron/resourceful)*
@@ -67,20 +65,20 @@ Here is a code example of using restful in a server: <a href="https://github.com
 
     Verb    Path                    Action                 Notes
 
-    GET     /creatures           => Creature.all()
-    POST    /creatures           => Creature.create()      Create with no-id, id is auto-generated
-    POST    /creatures/1         => Creature.create()      Create with id "1"
-    GET     /creatures/1         => Creature.show()
-    PUT     /creatures/1         => Creature.update()
-    DELETE  /creatures/1         => Creature.destroy()
-    POST    /creatures/1/update  => Creature.update()
-    POST    /creatures/1/destroy => Creature.destroy()
+    GET     /creature           => Creature.all()
+    POST    /creature           => Creature.create()      Create with no-id, id is auto-generated
+    POST    /creature/1         => Creature.create()      Create with id "1"
+    GET     /creature/1         => Creature.show()
+    PUT     /creature/1         => Creature.update()
+    DELETE  /creature/1         => Creature.destroy()
+    POST    /creature/1/update  => Creature.update()
+    POST    /creature/1/destroy => Creature.destroy()
 
   The `Director` router will dispatch all incoming RESTFul urls to the Creature resource and respond back with the appropriate result.
 
 ## Non-strict Mappings
 
-You'll notice that some of the routes defined above are not 100% restful ( such as `POST /creatures/1/update` ). 
+You'll notice that some of the routes defined above are not 100% restful ( such as `POST /creature/1/update` ). 
 
 Since not all HTTP clients support PUT and DELETE Verbs ( such as forms in web browsers ), restful maps additional "non-strict" rest mappings to make your life slightly easier.
 
@@ -135,8 +133,8 @@ Creature.feed.remote = true
 
 It's easy as that! By setting the `feed` method to remote, the following routes will exist in the `Director` router.
 
-    POST    /creatures/1/feed    => Creature.feed()
-    GET     /creatures/1/feed    => Creature.feed()
+    POST    /creature/1/feed    => Creature.feed()
+    GET     /creature/1/feed    => Creature.feed()
 
 
 ## Resource Security
@@ -165,7 +163,7 @@ app.router.get('/', function(){
 // Overrides `/creature/larry` but won't override,
 // any other `/creature/:id` captures.
 //
-app.router.get('/creatures/larry', function(){
+app.router.get('/creature/larry', function(){
   this.res.end('larry is special!');
 });
 
