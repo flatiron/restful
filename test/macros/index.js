@@ -36,10 +36,10 @@ macros.resourceTest = function (name, options, context) {
   }
 
   return context
-    .get(prefix + '/creatures')
+    .get(prefix + '/creature')
       .expect(200)
     .next()
-      .post(prefix + '/creatures/' + _id, {})
+      .post(prefix + '/creature/' + _id, {})
         .expect(201)
         .expect("should have correct id", function (err, res, body) {
           var result = JSON.parse(body).creature;
@@ -58,13 +58,13 @@ macros.resourceTest = function (name, options, context) {
           // _id = result._id;
         })
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(200)
     .next()
-      .put(prefix + '/creatures/' + _id, { 'type' : "Dragon" })
+      .put(prefix + '/creature/' + _id, { 'type' : "Dragon" })
         .expect(204)
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -72,10 +72,10 @@ macros.resourceTest = function (name, options, context) {
            assert.equal(result.creature.type, "Dragon");
         })
     .next()
-      .put(prefix + '/creatures/' + _id, { 'type' : "Unicorn", "life": 10 })
+      .put(prefix + '/creature/' + _id, { 'type' : "Unicorn", "life": 10 })
         .expect(204)
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -83,7 +83,7 @@ macros.resourceTest = function (name, options, context) {
            assert.equal(result.creature.type, "Unicorn");
         })
     .next()
-      .get(prefix + '/creatures/' + _id + '/feed')
+      .get(prefix + '/creature/' + _id + '/feed')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -91,7 +91,7 @@ macros.resourceTest = function (name, options, context) {
            assert.equal(result.result, "I have been fed my life is: 11");
         })
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -99,7 +99,7 @@ macros.resourceTest = function (name, options, context) {
           assert.equal(result.creature.life, "11");
         })
     .next()
-      .post(prefix + '/creatures/' + _id + '/feed')
+      .post(prefix + '/creature/' + _id + '/feed')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -107,7 +107,7 @@ macros.resourceTest = function (name, options, context) {
            assert.equal(result.result, "I have been fed my life is: 12");
         })
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -115,7 +115,7 @@ macros.resourceTest = function (name, options, context) {
           assert.equal(result.creature.life, "12");
         })
     .next()
-      .get(prefix + '/creatures/' + _id + '/hit')
+      .get(prefix + '/creature/' + _id + '/hit')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -123,7 +123,7 @@ macros.resourceTest = function (name, options, context) {
            assert.equal(result.result, "I have been hit my life is: 11");
         })
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -131,7 +131,7 @@ macros.resourceTest = function (name, options, context) {
           assert.equal(result.creature.life, "11");
         })
     .next()
-      .post(prefix + '/creatures/' + _id + '/hit')
+      .post(prefix + '/creature/' + _id + '/hit')
         .expect(200)
         .expect("should respond with correct message", function (err, res, body) {
            assert.isNull(err);
@@ -139,7 +139,7 @@ macros.resourceTest = function (name, options, context) {
            assert.equal(result.result, "I have been hit my life is: 10");
         })
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
           var result = JSON.parse(body);
@@ -147,19 +147,19 @@ macros.resourceTest = function (name, options, context) {
           assert.equal(result.creature.life, "10");
         })
     .next()
-      .get(prefix + '/creatures/' + _id + '/_die')
+      .get(prefix + '/creature/' + _id + '/_die')
         .expect(404)
     .next()
-      .post(prefix + '/creatures/' + _id + '/_die')
+      .post(prefix + '/creature/' + _id + '/_die')
         .expect(404)
 
 
     /* Remark: Tests for testing _id updates of resources
     .next()
-      .put(prefix + '/creatures/' + _id, { 'type' : "Unicorn", "_id": "charlie" })
+      .put(prefix + '/creature/' + _id, { 'type' : "Unicorn", "_id": "charlie" })
         .expect(204)
     .next()
-      .get(prefix + '/creatures/charlie')
+      .get(prefix + '/creature/charlie')
         .expect(200)
         .expect("should have correct type", function (err, res, body) {
            var result = JSON.parse(body);
@@ -168,10 +168,10 @@ macros.resourceTest = function (name, options, context) {
         })
      */
     .next()
-      .del(prefix + '/creatures/' + _id)
+      .del(prefix + '/creature/' + _id)
         .expect(204)
     .next()
-      .get(prefix + '/creatures/' + _id)
+      .get(prefix + '/creature/' + _id)
         .expect(404)
 };
 
@@ -180,45 +180,45 @@ macros.nonStrictResourceTest = function (options, context) {
   var prefix = options.prefix || '';
 
   return context
-    .get(prefix + '/creatures')
+    .get(prefix + '/creature')
       .expect(200)
   .next()
-    .post(prefix + '/creatures/new', { id: 1 })
+    .post(prefix + '/creature/new', { id: 1 })
       .expect(201)
   .next()
-    .get(prefix + '/creatures/1')
+    .get(prefix + '/creature/1')
       .expect(200)
   .next()
-    .post(prefix + '/creatures/1/update', { 'type' : 'dragon' })
+    .post(prefix + '/creature/1/update', { 'type' : 'dragon' })
       .expect(204)
   .next()
-    .post(prefix + '/creatures/1/destroy')
+    .post(prefix + '/creature/1/destroy')
       .expect(204)
   .next()
-    .get(prefix + '/creatures/1')
+    .get(prefix + '/creature/1')
       .expect(404)
   .next()
-    .post(prefix + '/creatures/new', { id: "bob" })
+    .post(prefix + '/creature/new', { id: "bob" })
       .expect(201)
   .next()
-    .get(prefix + '/creatures/bob')
+    .get(prefix + '/creature/bob')
       .expect(200)
   .next()
-    .post(prefix + '/creatures', { id: 2, 'type': 'Dragon' })
+    .post(prefix + '/creature', { id: 2, 'type': 'Dragon' })
       .expect(201)
   /* Remark: Tests for testing _id updates of resources
   .next()
-    .post(prefix + '/creatures/bob/update', { '_id' : 'what-about-bob' })
+    .post(prefix + '/creature/bob/update', { '_id' : 'what-about-bob' })
       .expect(204)
   .next()
-    .get(prefix + '/creatures/bob')
+    .get(prefix + '/creature/bob')
       .expect(404)
   .next()
-    .get(prefix + '/creatures/what-about-bob')
+    .get(prefix + '/creature/what-about-bob')
       .expect(200)
   */
   .next()
-    .get(prefix + '/creatures/2')
+    .get(prefix + '/creature/2')
       .expect(200)
       .expect('should have correct type', function (err, res, body) {
          var result = JSON.parse(body);
@@ -226,36 +226,36 @@ macros.nonStrictResourceTest = function (options, context) {
          assert.equal(result.creature.type, 'Dragon');
       })
   .next()
-    .get(prefix + '/creatures/find')
+    .get(prefix + '/creature/find')
       .expect(200)
       .expect('should return all creatures', function (err, res, body) {
          var result = JSON.parse(body);
-         assert.isArray(result.creatures);
+         assert.isArray(result.creature);
       })
   .next()
-    .post(prefix + '/creatures/find')
+    .post(prefix + '/creature/find')
       .expect(200)
       .expect('should return all creatures', function (err, res, body) {
          var result = JSON.parse(body);
-         assert.isArray(result.creatures);
+         assert.isArray(result.creature);
       })
   .next()
-    .post(prefix + '/creatures/find', { 'type': 'Dragon'})
+    .post(prefix + '/creature/find', { 'type': 'Dragon'})
       .expect(200)
       .expect('should return only Dragons', function (err, res, body) {
          var result = JSON.parse(body);
-         assert.isArray(result.creatures);
-         result.creatures.forEach(function(creature){
+         assert.isArray(result.creature);
+         result.creature.forEach(function(creature){
            assert.equal(creature.type, 'Dragon');
          });
       })
   .next()
-    .get(prefix + '/creatures/find?type=Dragon')
+    .get(prefix + '/creature/find?type=Dragon')
       .expect(200)
       .expect('should return only Dragons', function (err, res, body) {
          var result = JSON.parse(body);
-         assert.isArray(result.creatures);
-         result.creatures.forEach(function(creature){
+         assert.isArray(result.creature);
+         result.creature.forEach(function(creature){
            assert.equal(creature.type, 'Dragon');
          });
       })
@@ -264,28 +264,28 @@ macros.nonStrictResourceTest = function (options, context) {
 macros.relationalResourceTest = function (options, context) {
   var prefix = options.prefix || '';
   return context
-  .get(prefix + '/albums')
+  .get(prefix + '/album')
     .expect(200)
   .next()
-    .get(prefix + '/songs')
+    .get(prefix + '/song')
       .expect(404)
   .next()
-    .post(prefix + '/albums/ill-communication')
+    .post(prefix + '/album/ill-communication')
       .expect(201)
   .next()
-    .post(prefix + '/songs/random-no-album-track')
+    .post(prefix + '/song/random-no-album-track')
       .expect(404)
   .next()
-    .post(prefix + '/songs', { id: 'random-no-album-track'})
+    .post(prefix + '/song', { id: 'random-no-album-track'})
       .expect(404)
   .next()
-    .post(prefix + '/albums/ill-communication/songs/get-it-together')
+    .post(prefix + '/album/ill-communication/song/get-it-together')
       .expect(201)
   .next()
-    .post(prefix + '/songs', { id: "sure-shot" })
+    .post(prefix + '/song', { id: "sure-shot" })
       .expect(404)
   .next()
-    .post(prefix + '/albums/ill-communication/songs', { id: "sure-shot" })
+    .post(prefix + '/album/ill-communication/song', { id: "sure-shot" })
       .expect(201)
       .expect('should return correct song', function (err, res, body) {
          var result = JSON.parse(body);
@@ -296,10 +296,10 @@ macros.relationalResourceTest = function (options, context) {
          assert.equal(result.song.id, 'album/ill-communication/sure-shot');
       })
   .next()
-    .get(prefix + '/albums/ill-communication/songs/sure-shot')
+    .get(prefix + '/album/ill-communication/song/sure-shot')
       .expect(200)
   .next()
-    .get(prefix + '/albums/ill-communication')
+    .get(prefix + '/album/ill-communication')
       .expect(200)
       .expect('should return correct album with new songs', function (err, res, body) {
          var result = JSON.parse(body);
@@ -307,7 +307,7 @@ macros.relationalResourceTest = function (options, context) {
          assert.equal(result.album.song_ids.length, 2);
       })
   .next()
-    .get(prefix + '/albums/ill-communication/songs/get-it-together')
+    .get(prefix + '/album/ill-communication/song/get-it-together')
       .expect(200)
       .expect('should return correct song', function (err, res, body) {
          var result = JSON.parse(body);
@@ -315,7 +315,7 @@ macros.relationalResourceTest = function (options, context) {
          assert.equal(result.song.album_id, 'ill-communication');
       })
   .next()
-    .get(prefix + '/albums/ill-communication')
+    .get(prefix + '/album/ill-communication')
       .expect(200)
       .expect('should return correct album', function (err, res, body) {
          var result = JSON.parse(body);
@@ -323,7 +323,7 @@ macros.relationalResourceTest = function (options, context) {
          assert.equal(result.album.resource, 'Album');
       })
   .next()
-    .post(prefix + '/albums/ill-communication/songs/root-down')
+    .post(prefix + '/album/ill-communication/song/root-down')
       .expect(201)
       .expect('should return correct song', function (err, res, body) {
          var result = JSON.parse(body);
@@ -331,13 +331,13 @@ macros.relationalResourceTest = function (options, context) {
          assert.equal(result.song.resource, 'Song');
       })
   .next()
-    .get(prefix + '/albums/ill-communication/songs/root-down')
+    .get(prefix + '/album/ill-communication/song/root-down')
       .expect(200)
   .next()
-    .post(prefix + '/albums/ill-communication/songs/sabotage')
+    .post(prefix + '/album/ill-communication/song/sabotage')
       .expect(201)
   .next()
-    .get(prefix + '/albums/ill-communication/songs/sabotage')
+    .get(prefix + '/album/ill-communication/song/sabotage')
       .expect(200)
       .expect('should return correct song', function (err, res, body) {
         var result = JSON.parse(body)
@@ -345,7 +345,7 @@ macros.relationalResourceTest = function (options, context) {
         assert.equal(result.song.album_id, 'ill-communication');
       })
   .next()
-    .get(prefix + '/albums/ill-communication')
+    .get(prefix + '/album/ill-communication')
       .expect(200)
       .expect('should return correct songs', function (err, res, body) {
          var result = JSON.parse(body);
@@ -359,13 +359,13 @@ macros.relationalResourceTest = function (options, context) {
 
       })
   .next()
-    .put(prefix + '/albums/ill-communication/songs/sabotage', { "description": "uses real instruments played by beastie boys"})
+    .put(prefix + '/album/ill-communication/song/sabotage', { "description": "uses real instruments played by beastie boys"})
       .expect(204)
       .expect('should not error', function (err, res, body) {
         assert.isNull(err);
       })
   .next()
-    .get(prefix + '/albums/ill-communication/songs/sabotage')
+    .get(prefix + '/album/ill-communication/song/sabotage')
     .expect(200)
     .expect('should return correct description', function (err, res, body) {
        var result = JSON.parse(body);
@@ -374,22 +374,22 @@ macros.relationalResourceTest = function (options, context) {
        assert.equal(result.song.description, "uses real instruments played by beastie boys")
     })
   .next()
-    .del(prefix + '/albums/ill-communication/songs/sabotage')
+    .del(prefix + '/album/ill-communication/song/sabotage')
     .expect(204)
   .next()
-    .get(prefix + '/albums/ill-communication/songs/sabotage')
+    .get(prefix + '/album/ill-communication/song/sabotage')
     .expect(404)
   .next()
-    .get(prefix + '/albums/invalid-album/songs/invalid-song')
+    .get(prefix + '/album/invalid-album/song/invalid-song')
     .expect(404)
 };
 
 macros.typeValidationTest = function (context) {
   return context
-  .get('/users')
+  .get('/user')
     .expect(200)
   .next()
-    .post('/users')
+    .post('/user')
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
          var result = JSON.parse(body);
@@ -398,10 +398,10 @@ macros.typeValidationTest = function (context) {
          assert.equal(result.validate.errors[0].message, 'is required');
       })
   .next()
-    .get('/users/1')
+    .get('/user/1')
       .expect(404)
   .next()
-    .post('/users', { email: "NOT_VALID_EMAIL@123" })
+    .post('/user', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -411,20 +411,20 @@ macros.typeValidationTest = function (context) {
         assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
   .next()
-    .get('/users/1')
+    .get('/user/1')
       .expect(404)
   .next()
-    .post('/users/1', { email: "marak.squires@gmail.com" })
+    .post('/user/1', { email: "marak.squires@gmail.com" })
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);
         assert.isDefined(result.user);
       })
   .next()
-    .get('/users/1')
+    .get('/user/1')
       .expect(200)
   .next()
-    .put('/users/1', { email: "NOT_VALID_EMAIL@123" })
+    .put('/user/1', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -434,17 +434,17 @@ macros.typeValidationTest = function (context) {
         assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
   .next()
-    .post('/users/2', { email: "marak.squires@gmail.com" })
+    .post('/user/2', { email: "marak.squires@gmail.com" })
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);
         assert.isDefined(result.user);
       })
   .next()
-    .get('/users/2')
+    .get('/user/2')
       .expect(200)
   .next()
-    .post('/users', { email: "NOT_VALID_EMAIL@123", age: "50" })
+    .post('/user', { email: "NOT_VALID_EMAIL@123", age: "50" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -457,7 +457,7 @@ macros.typeValidationTest = function (context) {
         assert.equal(result.validate.errors[1].message, 'is not a valid age');
       })
   .next()
-    .post('/users', { email: "marak.squires@gmail.com", age: "50" })
+    .post('/user', { email: "marak.squires@gmail.com", age: "50" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -466,16 +466,16 @@ macros.typeValidationTest = function (context) {
         assert.equal(result.validate.errors[0].message, 'is not a valid age');
       })
   .next()
-    .post('/users', { email: "marak.squires@gmail.com", age: 50 })
+    .post('/user', { email: "marak.squires@gmail.com", age: 50 })
       .expect(201)
 };
 
 macros.nonStrictTypeValidationTest = function (options, context) {
   return context
-  .get('/users')
+  .get('/user')
     .expect(200)
   .next()
-    .post('/users')
+    .post('/user')
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
          var result = JSON.parse(body);
@@ -484,10 +484,10 @@ macros.nonStrictTypeValidationTest = function (options, context) {
          assert.equal(result.validate.errors[0].message, 'is required');
       })
   .next()
-    .get('/users/1')
+    .get('/user/1')
       .expect(404)
   .next()
-    .post('/users', { email: "NOT_VALID_EMAIL@123" })
+    .post('/user', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -497,20 +497,20 @@ macros.nonStrictTypeValidationTest = function (options, context) {
         assert.equal(result.validate.errors[0].message, 'is not a valid email');
       })
   .next()
-    .get('/users/1')
+    .get('/user/1')
       .expect(404)
   .next()
-    .post('/users', { id: 1, email: "marak.squires@gmail.com" })
+    .post('/user', { id: 1, email: "marak.squires@gmail.com" })
       .expect(201)
       .expect('should respond with created user', function (err, res, body) {
         var result = JSON.parse(body);
         assert.isDefined(result.user);
       })
   .next()
-    .get('/users/1')
+    .get('/user/1')
       .expect(200)
   .next()
-    .post('/users/1/update', { email: "NOT_VALID_EMAIL@123" })
+    .post('/user/1/update', { email: "NOT_VALID_EMAIL@123" })
       .expect(422)
       .expect('should return correct validation error', function (err, res, body) {
         var result = JSON.parse(body);
@@ -521,15 +521,15 @@ macros.nonStrictTypeValidationTest = function (options, context) {
       })
   .next()
     /* Test String -> Number cohersions for non-strict mode */
-    .post('/users', { email: "marak.squires@gmail.com", age: "50" })
+    .post('/user', { email: "marak.squires@gmail.com", age: "50" })
       .expect(201)
   .next()
-    .post('/users',   { email: "marak.squires@gmail.com", age: "50" })
+    .post('/user',   { email: "marak.squires@gmail.com", age: "50" })
       .expect(201)
   .next()
-    .post('/users', { email: "marak.squires@gmail.com", age: 50 })
+    .post('/user', { email: "marak.squires@gmail.com", age: 50 })
       .expect(201)
   .next()
-    .post('/users',   { email: "marak.squires@gmail.com", age: 50 })
+    .post('/user',   { email: "marak.squires@gmail.com", age: 50 })
       .expect(201)
 };

@@ -21,7 +21,7 @@ vows.describe('restful/core').addBatch({
         assert.isObject(router.routes);
       },
       'should contain the correct routes': function (err, router) {
-        assert.isObject(router.routes.creatures);
+        assert.isObject(router.routes.creature);
       }
     }
   }
@@ -36,8 +36,8 @@ vows.describe('restful/core').addBatch({
         assert.isObject(router.routes);
       },
       'should contain the correct routes': function (err, router) {
-        assert.isObject(router.routes.creatures);
-        assert.isObject(router.routes.users);
+        assert.isObject(router.routes.creature);
+        assert.isObject(router.routes.user);
       }
     }
   }
