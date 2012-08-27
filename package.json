@@ -5,7 +5,7 @@
   "maintainers": [
     { "name": "Marak Squires", "email": "marak@nodejitsu.com" }
   ],
-  "version": "0.3.2",
+  "version": "0.4.0",
   "main": "./lib/restful",
   "peerDependencies": {
     "director": "1.1.x",
