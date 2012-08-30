@@ -25,7 +25,7 @@ var resourceful = require('resourceful'),
     Creature    = resourceful.define('creature');
 
 Creature.property('type', String, { default: "dragon" });
-Creature.property('life', Number, { default: 10, min: 0, max: 20 });
+Creature.property('life', Number, { default: 10, minimum: 0, maximum: 20 });
 ```
 
 *[additional API documentation for defining resources](http://github.com/flatiron/resourceful)*
