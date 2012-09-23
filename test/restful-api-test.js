@@ -1,5 +1,5 @@
 /*
- * restful-api-test.js: Tests for purely `restful` routes 
+ * restful-api-test.js: Tests for purely `restful` routes
  *
  * (C) 2012, Nodejitsu Inc.
  *

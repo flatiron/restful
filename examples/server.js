@@ -4,7 +4,7 @@
  * (C) 2012, Nodejitsu Inc.
  *
  */
- 
+
 var http        = require('http'),
     fixtures    = require('../test/fixtures'),
     restful     = require('../lib/restful'),

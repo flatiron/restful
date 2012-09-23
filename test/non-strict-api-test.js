@@ -1,10 +1,10 @@
 /*
- * non-strict-api-test.js: Tests for non-strict `restful` routes 
+ * non-strict-api-test.js: Tests for non-strict `restful` routes
  *
  * (C) 2012, Nodejitsu Inc.
  *
  */
- 
+
 var vows = require('vows'),
     assert = require('assert'),
     APIeasy = require('api-easy'),

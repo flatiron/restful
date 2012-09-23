@@ -4,7 +4,7 @@
  * (C) 2012, Nodejitsu Inc.
  *
  */
- 
+
 var vows = require('vows'),
     assert = require('assert'),
     APIeasy = require('api-easy'),

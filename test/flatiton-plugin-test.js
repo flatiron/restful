@@ -10,7 +10,7 @@ var vows = require('vows'),
     APIeasy = require('api-easy'),
     restful = require('../lib/restful'),
     resourceful = require('resourceful'),
-    http = require('http'), 
+    http = require('http'),
     fixtures = require('./fixtures'),
     macros = require('./macros');
 

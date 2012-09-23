@@ -11,7 +11,7 @@ var http = require('http');
 fixtures.Creature = resourceful.define('creature', function () {
 
   var self = this;
-  
+
   this.restful = true;
   //
   // Specify a storage engine
@@ -99,14 +99,14 @@ fixtures.User = resourceful.define('user', function () {
 fixtures.Album = resourceful.define('album', function () {
   //this.use('couchdb', {database: "test3" })
   this.restful = true;
-  
+
   this.use('memory');
   this.string('title');
 });
 
 fixtures.Song = resourceful.define('song', function () {
   this.restful = true;
-  
+
   //this.use('couchdb', {database: "test3" })
   this.use('memory');
   this.number('bpm');
