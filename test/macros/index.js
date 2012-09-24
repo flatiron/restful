@@ -36,6 +36,8 @@ macros.resourceTest = function (name, options, context) {
   }
 
   return context
+    .get(prefix)
+      .expect(200)
     .get(prefix + '/creature')
       .expect(200)
     .next()
@@ -180,6 +182,8 @@ macros.nonStrictResourceTest = function (options, context) {
   var prefix = options.prefix || '';
 
   return context
+    .get(prefix)
+      .expect(200)
     .get(prefix + '/creature')
       .expect(200)
   .next()
