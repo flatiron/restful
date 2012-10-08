@@ -386,6 +386,9 @@ macros.relationalResourceTest = function (options, context) {
   .next()
     .get(prefix + '/album/invalid-album/song/invalid-song')
     .expect(404)
+  .next()
+    .get(prefix + '/album/invalid-album/song')
+    .expect(404)
 };
 
 macros.typeValidationTest = function (context) {
