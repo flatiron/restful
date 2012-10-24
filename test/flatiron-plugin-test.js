@@ -28,7 +28,7 @@ suite.use('localhost', 8004)
       TODO:
 
           Uncomment these tests and figure out why they are not passing on travis
-
+  
   .addBatch({
     'With a flatiron app ' : {
       'starting the app': {
