@@ -57,7 +57,25 @@ fixtures.Creature = resourceful.define('creature', function () {
   }
   this.hit.remote = true;
 
-
+  //
+  // This is a "class" functin,
+  // we will expose it as generic, and will not receive any id
+  //
+	
+  this.ecosystem_life = function (options, callback) {
+    self.all(function(err, creatures){
+      if(err) {
+        return callback(err);
+      }
+      var life = 0;
+			for (var i=0; i<creatures.length; i++) life+=creatures[i].life;
+			callback(null, life); 
+    });
+  }
+	
+  this.ecosystem_life.remote = true;
+	this.ecosystem_life.class = true;
+	
   this._die = function (food) {
     //
     // Remark: We'll consider the _die function "private",

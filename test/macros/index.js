@@ -141,6 +141,24 @@ macros.resourceTest = function (name, options, context) {
            assert.equal(result.result, "I have been hit my life is: 10");
         })
     .next()
+      .get(prefix + '/creature/~ecosystem_life')
+        .expect(200)
+        .expect("should retrieve entire ecosystem life", function (err, res, body) {
+          var result = JSON.parse(body);
+					assert.isObject(result)
+          assert.isNumber(result.result)
+          assert.equal(result.result, "10");
+        })
+    .next()
+      .post(prefix + '/creature/~ecosystem_life')
+        .expect(200)
+        .expect("should retrieve entire ecosystem life", function (err, res, body) {
+          var result = JSON.parse(body);
+					assert.isObject(result)
+          assert.isNumber(result.result)
+          assert.equal(result.result, "10");
+        })
+    .next()
       .get(prefix + '/creature/' + _id)
         .expect(200)
         .expect("should have correct life", function (err, res, body) {
