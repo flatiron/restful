@@ -9,17 +9,17 @@
   "version": "0.2.2",
   "main": "./lib/restful",
   "peerDependencies": {
-    "director": "1.1.x",
+    "director": "1.2.x",
     "resourceful": "0.2.x"
   },
   "dependencies": {
-    "director": "1.1.x",
+    "director": "1.2.x",
     "director-explorer": "*",
     "resourceful": "0.2.x",
-    "utile": "0.1.x"
+    "utile": "0.2.x"
   },
   "devDependencies": {
-    "vows": "0.6.x",
+    "vows": "0.7.x",
     "api-easy": "0.3.x"
   },
   "optionalDependencies": {},
