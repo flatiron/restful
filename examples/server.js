@@ -19,10 +19,16 @@ var router = restful.createRouter([fixtures.Creature, fixtures.Album]);
 // Setup a very simple HTTP server to serve our routing map!
 //
 var server = http.createServer(function (req, res) {
-  req.chunks = [];
+  var chunks = [];
   req.on('data', function (chunk) {
-    req.chunks.push(chunk.toString());
+    chunks.push(chunk);
   });
+
+  req.on('end', function () {
+    var body = Buffer.concat(chunks)
+    req.body = body.toString()
+  })
+
   router.dispatch(req, res, function (err) {
     if (err) {
       res.writeHead(404);
